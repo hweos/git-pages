@@ -52,7 +52,9 @@ const config = {
         // When applying `zh` in language, please install `nodejieba` in your project.
       },
     ],
+    "@docusaurus/theme-live-codeblock",
   ],
+  // themes:['@docusaurus/theme-live-codeblock'],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -65,11 +67,15 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "index",
+            docId: "MDF",
             position: "left",
             label: "Docs",
           },
           { to: "/blog", label: "Blog", position: "left" },
+          {
+            position: "right",
+            type: "localeDropdown",
+          },
           {
             href: "https://github.com/HuangZhe007/git-pages",
             label: "GitHub",
@@ -85,7 +91,7 @@ const config = {
           //   items: [
           //     {
           //       label: "Tutorial",
-          //       to: "/docs/index",
+          //       to: "/docs/MDF",
           //     },
           //   ],
           // },
@@ -125,6 +131,13 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      liveCodeBlock: {
+        /**
+         * The position of the live playground, above or under the editor
+         * Possible values: "top" | "bottom"
+         */
+        playgroundPosition: "bottom",
       },
     }),
 };
