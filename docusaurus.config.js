@@ -25,12 +25,12 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/HuangZhe007/git-pages/tree/main/",
+          editUrl: "https://github.com/HuangZhe007/git-pages/edit/main/",
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
-          editUrl: "https://github.com/HuangZhe007/git-pages/blob/main/",
+          editUrl: "https://github.com/HuangZhe007/git-pages/edit/main/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
