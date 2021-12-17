@@ -22,11 +22,12 @@ const config = {
       "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
-        docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          editUrl: "https://github.com/facebook/docusaurus/edit/main/website/",
-        },
+        // docs: {
+        //   sidebarPath: require.resolve("./sidebars.js"),
+        //   // Please change this to your repo.
+        //   editUrl: "https://github.com/facebook/docusaurus/edit/main/website/",
+        // },
+        docs: false,
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
@@ -38,7 +39,7 @@ const config = {
       },
     ],
   ],
-  plugins:[
+  plugins: [
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
@@ -51,7 +52,7 @@ const config = {
         // ```
         // When applying `zh` in language, please install `nodejieba` in your project.
       },
-    ]
+    ],
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -63,7 +64,7 @@ const config = {
           src: "img/docusaurus.png",
         },
         items: [
-          { to: "/docs", label: "Docs", position: "left" },
+          // { to: "/docs", label: "Docs", position: "left" },
           { to: "/blog", label: "Blog", position: "left" },
           {
             href: "https://github.com/HuangZhe007/git-pages",
