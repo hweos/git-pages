@@ -14,8 +14,8 @@ const config = {
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   deploymentBranch: "main",
-  organizationName: "huangzhe007", // Usually your GitHub org/user name.
-  projectName: "huangzhe007.github.io", // Usually your repo name.
+  organizationName: "hweos", // Usually your GitHub org/user name.
+  projectName: "hweos.github.io", // Usually your repo name.
 
   presets: [
     [
@@ -25,12 +25,12 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/HuangZhe007/git-pages/edit/main/",
+          editUrl: "https://github.com/hweos/git-pages/edit/main/",
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
-          editUrl: "https://github.com/HuangZhe007/git-pages/edit/main/",
+          editUrl: "https://github.com/hweos/git-pages/edit/main/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -77,7 +77,7 @@ const config = {
             type: "localeDropdown",
           },
           {
-            href: "https://github.com/HuangZhe007/git-pages",
+            href: "https://github.com/hweos/git-pages",
             label: "GitHub",
             position: "right",
           },
@@ -121,7 +121,7 @@ const config = {
               },
               {
                 label: "GitHub",
-                href: "https://github.com/HuangZhe007/git-pages",
+                href: "https://github.com/hweos/git-pages",
               },
             ],
           },
