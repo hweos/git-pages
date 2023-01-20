@@ -1,0 +1,163 @@
+---
+sidebar_position: 1
+id: performance
+---
+
+# React 性能优化
+
+## 跳过不必要的组件更新
+
+> 在 React 工作流中，如果只有父组件发生状态更新，即使父组件传给子组件的所有 Props 都没有修改，也会引起子组件的 Render 过程。从 React 的声明式设计理念来看，如果子组件的 Props 和 State 都没有改变，那么其生成的 DOM 结构和副作用也不应该发生改变。当子组件符合声明式设计理念时，就可以忽略子组件本次的 Render 过程。
+
+### useMemo、useCallback
+
+```jsx live noInline
+const renderMap = {};
+
+render(function () {
+  const [, refresh] = useState(0);
+  // 使用 useMemo
+  const memoItem = useMemo(() => {
+    renderMap["memoItem"] = (renderMap["memoItem"] || 0) + 1;
+    return "memoItem";
+  }, []);
+  const item = (() => {
+    renderMap["item"] = (renderMap["item"] || 0) + 1;
+    return "item";
+  })();
+  // 使用 useCallback
+  const callbackItem = useCallback(() => {
+    return "callbackItem";
+  }, []);
+  const funItem = () => {
+    return "funItem";
+  };
+  useEffect(() => {
+    renderMap["callbackItem"] = (renderMap["callbackItem"] || 0) + 1;
+  }, [callbackItem]);
+  useEffect(() => {
+    renderMap["funItem"] = (renderMap["funItem"] || 0) + 1;
+  }, [funItem]);
+  return (
+    <div>
+      {memoItem}
+      <br />
+      {item}
+      <br />
+      {callbackItem()}
+      <br />
+      {funItem()}
+      <br />
+      <button onClick={() => refresh((i) => ++i)}>update</button>
+      <br />
+      renderMap: {JSON.stringify(renderMap)}
+    </div>
+  );
+});
+```
+
+### PureComponent 和 memo
+
+```jsx live noInline
+const renderList = [0, 0];
+const renderList2 = [0, 0];
+
+function Item({ text, index }) {
+  renderList[index] = renderList[index] + 1;
+  return <span>{text}</span>;
+}
+
+// 使用memo
+const MemoItem = memo(function ({ text, index }) {
+  renderList2[index] = renderList2[index] + 1;
+  return <span>{text}</span>;
+});
+
+render(function () {
+  const [state, setState] = useState([1, 1]);
+  return (
+    <div>
+      {state.map((text, index) => (
+        <Item key={index} text={text} index={index} />
+      ))}
+      <br />
+      {/* 使用memo */}
+      {state.map((text, index) => (
+        <MemoItem key={index + "memo"} text={text} index={index} />
+      ))}
+      <br />
+      <button
+        onClick={() => {
+          setState((list) => {
+            list[1] = list[1] + 1;
+            return [...list];
+          });
+        }}
+      >
+        update
+      </button>
+      <br />
+      renderList: {JSON.stringify(renderList)}
+      <br />
+      renderList2: {JSON.stringify(renderList2)}
+    </div>
+  );
+});
+```
+
+#### PureComponent 和 memo 只会浅比较 props
+
+```jsx live noInline
+const renderList = [0, 0];
+const renderList2 = [0, 0];
+
+const Item = memo(({ item, index }) => {
+  renderList[index] = renderList[index] + 1;
+  return <span>{JSON.stringify(item)}</span>;
+});
+// 使用areEqual
+const Item2 = memo(
+  ({ item, index }) => {
+    renderList2[index] = renderList2[index] + 1;
+    return <span>{JSON.stringify(item)}</span>;
+  },
+  // 写自己的判断逻辑
+  (prevProps, nextProps) => prevProps.item.age === nextProps.item.age
+);
+
+render(function () {
+  const [state, setState] = useState([
+    { name: "张三", age: 18 },
+    { name: "李四", age: 19 },
+  ]);
+  return (
+    <div>
+      {state.map((item, index) => {
+        return <Item key={index} item={item} index={index} />;
+      })}
+      <br />
+      {/* 使用areEqual */}
+      {state.map((item, index) => {
+        return <Item2 key={index + "2"} item={item} index={index} />;
+      })}
+      <br />
+      <button
+        onClick={() => {
+          setState((list) => {
+            const _list = [...list];
+            _list[1] = { ..._list[1], age: _list[1].age + 1 };
+            _list[0] = { ...list[0] };
+            return _list;
+          });
+        }}
+      >
+        update
+      </button>
+      <br />
+      renderList: {JSON.stringify(renderList)}
+      <br />
+      renderList2: {JSON.stringify(renderList2)}
+    </div>
+  );
+});
+```
