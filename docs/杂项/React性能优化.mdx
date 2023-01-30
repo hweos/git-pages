@@ -13,16 +13,18 @@ id: performance
 
 ```jsx live noInline
 const renderMap = {};
-
+function setRenderMap(name) {
+  renderMap[name] = (renderMap[name] || 0) + 1;
+}
 render(function () {
   const [, refresh] = useState(0);
   // 使用 useMemo
   const memoItem = useMemo(() => {
-    renderMap["memoItem"] = (renderMap["memoItem"] || 0) + 1;
+    setRenderMap("memoItem");
     return "memoItem";
   }, []);
   const item = (() => {
-    renderMap["item"] = (renderMap["item"] || 0) + 1;
+    setRenderMap("item");
     return "item";
   })();
   // 使用 useCallback
@@ -33,10 +35,10 @@ render(function () {
     return "funItem";
   };
   useEffect(() => {
-    renderMap["callbackItem"] = (renderMap["callbackItem"] || 0) + 1;
+    setRenderMap("callbackItem");
   }, [callbackItem]);
   useEffect(() => {
-    renderMap["funItem"] = (renderMap["funItem"] || 0) + 1;
+    setRenderMap("funItem");
   }, [funItem]);
   return (
     <div>
@@ -59,17 +61,20 @@ render(function () {
 ### PureComponent 和 memo
 
 ```jsx live noInline
-const renderList = [0, 0];
-const renderList2 = [0, 0];
+const renderMap = {};
+
+function setRenderMap(name) {
+  renderMap[name] = (renderMap[name] || 0) + 1;
+}
 
 function Item({ text, index }) {
-  renderList[index] = renderList[index] + 1;
+  setRenderMap(`Item-${index}`);
   return <span>{text}</span>;
 }
 
 // 使用memo
 const MemoItem = memo(function ({ text, index }) {
-  renderList2[index] = renderList2[index] + 1;
+  setRenderMap(`MemoItem-${index}`);
   return <span>{text}</span>;
 });
 
@@ -97,9 +102,7 @@ render(function () {
         update
       </button>
       <br />
-      renderList: {JSON.stringify(renderList)}
-      <br />
-      renderList2: {JSON.stringify(renderList2)}
+      renderMap: {JSON.stringify(renderMap)}
     </div>
   );
 });
@@ -108,17 +111,20 @@ render(function () {
 #### PureComponent 和 memo 只会浅比较 props
 
 ```jsx live noInline
-const renderList = [0, 0];
-const renderList2 = [0, 0];
+const renderMap = {};
+
+function setRenderMap(name) {
+  renderMap[name] = (renderMap[name] || 0) + 1;
+}
 
 const Item = memo(({ item, index }) => {
-  renderList[index] = renderList[index] + 1;
+  setRenderMap(`Item-${item.name}`);
   return <span>{JSON.stringify(item)}</span>;
 });
 // 使用areEqual
 const Item2 = memo(
   ({ item, index }) => {
-    renderList2[index] = renderList2[index] + 1;
+    setRenderMap(`Item2-${item.name}`);
     return <span>{JSON.stringify(item)}</span>;
   },
   // 写自己的判断逻辑
@@ -154,10 +160,117 @@ render(function () {
         update
       </button>
       <br />
-      renderList: {JSON.stringify(renderList)}
-      <br />
-      renderList2: {JSON.stringify(renderList2)}
+      renderMap: {JSON.stringify(renderMap)}
     </div>
   );
 });
 ```
+
+### 缩小状态影响范围
+
+```jsx live noInline
+const renderMap = {};
+
+function setRenderMap(name) {
+  renderMap[name] = (renderMap[name] || 0) + 1;
+}
+
+function Example() {
+  setRenderMap("Example");
+  return <p>我是一个无关组件</p>;
+}
+
+render(function App() {
+  setRenderMap("App");
+  const [color, setColor] = useState("red");
+  return (
+    <div>
+      <input value={color} onChange={(e) => setColor(e.target.value)} />
+      <p style={{ color }}>Hello, world!</p>
+      <Example />
+      renderMap: {JSON.stringify(renderMap)}
+    </div>
+  );
+});
+```
+
+每当 color 发生变化时，我们都会重新渲染`Example`。
+
+我们可以用上面的 memo 来处理这个事情，不过下面介绍点不一样的
+
+#### 状态下移
+
+```jsx live noInline
+const renderMap = {};
+
+function setRenderMap(name) {
+  renderMap[name] = (renderMap[name] || 0) + 1;
+}
+
+function Example() {
+  setRenderMap("Example");
+  return <p>我是一个无关组件</p>;
+}
+function Input() {
+  const [color, setColor] = useState("red");
+  setRenderMap("Input");
+  return (
+    <>
+      <input value={color} onChange={(e) => setColor(e.target.value)} />
+      <p style={{ color }}>Hello, world!</p>
+      renderMap: {JSON.stringify(renderMap)}
+    </>
+  );
+}
+
+render(function App() {
+  setRenderMap("App");
+  return (
+    <div>
+      <Input />
+      <Example />
+    </div>
+  );
+});
+```
+
+我们将将 color 状态抽取到新组件中，这样 color 改变就不会引起组件 `App` 和 `Example` 重新 Render 了
+
+#### 内容提升
+
+```jsx live noInline
+const renderMap = {};
+
+function setRenderMap(name) {
+  renderMap[name] = (renderMap[name] || 0) + 1;
+}
+
+function Example() {
+  setRenderMap("Example");
+  return <p>我是一个无关组件</p>;
+}
+function BG({ children }) {
+  setRenderMap("BG");
+  const [color, setColor] = useState("red");
+  return (
+    <div style={{ color }}>
+      <input value={color} onChange={(e) => setColor(e.target.value)} />
+      {children}
+      renderMap: {JSON.stringify(renderMap)}
+    </div>
+  );
+}
+
+render(function App() {
+  setRenderMap("App");
+  return (
+    <BG>
+      <p>Hello, world!</p>
+      <Example />
+    </BG>
+  );
+});
+```
+
+在组件 App 的顶层使用了 color。
+将 color 状态抽取到新组件中，并提供一个 props 来组合 `Example`。
