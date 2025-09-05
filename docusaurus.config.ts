@@ -8,6 +8,7 @@ const config: Config = {
   title: 'Hweos',
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
+  deploymentBranch: 'main',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
