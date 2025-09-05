@@ -1,0 +1,233 @@
+---
+sidebar_position: 2
+id: ssh-config
+title: MacBook SSH 配置指南
+description: 完整的 MacBook SSH 密钥配置指南，多账户管理和常见问题解决方案
+---
+
+# MacBook SSH 配置指南
+
+## 📋 概述
+
+本指南将帮助你在 MacBook 上配置 SSH 密钥，以便安全地连接 GitHub 等 Git 服务。通过 SSH 密钥，你可以免密进行 Git 操作，提高开发效率。
+
+:::tip 为什么使用 SSH？
+SSH 密钥比密码更安全，支持免密操作，特别适合频繁的 Git 操作场景。
+:::
+
+## 🔧 前置条件
+
+- macOS 系统
+- 已安装 Git
+- 拥有 GitHub 账户
+- 终端访问权限
+
+:::warning 重要提醒
+确保你有管理员权限来修改系统配置文件。
+:::
+
+## 🚀 配置步骤
+
+### 1. 生成 SSH 密钥
+
+```bash title="生成SSH密钥"
+# 进入 SSH 目录
+cd ~/.ssh
+
+# 生成新的 SSH 密钥对
+ssh-keygen -t rsa -C "your-email@example.com"
+```
+
+**说明：**
+- `-t rsa`：指定密钥类型为 RSA
+- `-C "email"`：添加注释，通常是你的邮箱地址
+- 按回车使用默认文件名，或输入自定义文件名
+- 设置密码（可选，建议设置）
+
+:::info 密钥类型选择
+- **RSA**: 兼容性好，推荐用于一般用途
+- **Ed25519**: 更安全，性能更好，但需要较新的系统支持
+:::
+
+### 2. 配置 SSH Config 文件
+
+```bash title="编辑SSH配置"
+# 编辑 SSH 配置文件
+vi ~/.ssh/config
+```
+
+在配置文件中添加以下内容：
+
+```bash title="~/.ssh/config"
+# GitHub 配置
+Host github
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa  # 你的私钥文件路径
+
+# 如果有多个 GitHub 账户，可以这样配置
+Host github-work
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/work_rsa
+
+Host github-personal
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/personal_rsa
+```
+
+### 3. 添加密钥到 SSH Agent
+
+```bash title="SSH Agent配置"
+
+# 添加私钥到 SSH Agent
+ssh-add ~/.ssh/id_rsa
+
+# 如果有多个密钥，分别添加
+ssh-add ~/.ssh/work_rsa
+ssh-add ~/.ssh/personal_rsa
+```
+
+:::tip 自动启动SSH Agent
+可以将以下内容添加到 `~/.zshrc` 或 `~/.bash_profile` 中，实现自动启动：
+
+```bash
+# 自动启动 SSH Agent 并添加密钥
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa
+fi
+```
+:::
+
+### 4. 配置 GitHub SSH
+
+#### 4.1 获取公钥
+
+```bash title="查看公钥"
+# 查看公钥内容
+cat ~/.ssh/id_rsa.pub
+```
+
+#### 4.2 添加公钥到 GitHub
+
+1. 访问 [GitHub SSH 设置页面](https://github.com/settings/keys)
+2. 点击 "New SSH key"
+3. 输入标题（如：MacBook Pro）
+4. 将公钥内容粘贴到 "Key" 字段
+5. 点击 "Add SSH key"
+
+### 5. 克隆仓库
+
+```bash title="SSH克隆仓库"
+# 使用 SSH 克隆仓库
+git clone git@github:username/repository.git
+
+# 或者使用配置的别名
+git clone git@github-work:company/repository.git
+```
+
+## ✅ 验证配置
+
+### 检查 SSH 连接
+
+```bash title="测试SSH连接"
+# 测试 GitHub 连接
+ssh -T git@github.com
+```
+
+如果配置成功，会看到类似信息：
+```
+Hi username! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+### 查看已添加的密钥
+
+```bash title="查看SSH密钥"
+# 列出所有已添加的 SSH 密钥
+ssh-add -l
+
+# 查看密钥指纹
+ssh-add -L
+```
+
+## ❓ 常见问题解答
+
+### Q1: 权限被拒绝 (Permission denied)
+
+**问题：** 克隆或推送时出现权限错误
+
+**解决方案：**
+
+1. 检查 SSH 密钥是否在 agent 中：
+   ```bash
+   ssh-add -l
+   ```
+
+2. 如果没有，重新添加：
+   ```bash
+   ssh-add ~/.ssh/id_rsa
+   ```
+
+3. 检查 GitHub 上的公钥是否正确添加
+
+4. 验证 SSH 连接：
+   ```bash
+   ssh -T git@github.com
+   ```
+
+:::warning 权限问题排查
+如果仍然有问题，检查文件权限：
+```bash
+chmod 600 ~/.ssh/id_rsa
+chmod 644 ~/.ssh/id_rsa.pub
+```
+:::
+
+### Q2: 多个 GitHub 账户冲突
+
+**问题：** 需要同时使用多个 GitHub 账户
+
+**解决方案：**
+
+1. 为每个账户生成不同的密钥
+2. 在 `~/.ssh/config` 中配置不同的 Host
+3. 克隆时使用对应的 Host 别名
+
+```bash title="多账户配置示例"
+# 工作账户
+Host github-work
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/work_rsa
+
+# 个人账户
+Host github-personal
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/personal_rsa
+```
+
+### Q3: SSH Agent 重启后密钥丢失
+
+**问题：** 重启后需要重新添加密钥
+
+**解决方案：**
+
+在 `~/.zshrc` 或 `~/.bash_profile` 中添加：
+
+```bash title="自动启动SSH Agent"
+# 自动启动 SSH Agent 并添加密钥
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa
+fi
+```
+
+## 📝 注意事项
+
+- 🔐 **安全提醒**：私钥文件 (`id_rsa`) 绝对不能泄露给他人
+- 🔄 **备份**：建议备份 SSH 密钥到安全位置
+- 🏷️ **命名规范**：为不同用途的密钥使用有意义的文件名
+- 🔍 **定期检查**：定期检查 GitHub 上的 SSH 密钥列表，删除不再使用的密钥
