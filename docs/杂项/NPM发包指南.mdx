@@ -1,0 +1,42 @@
+# NPM 发包流程指南
+
+## 1. 初始化项目
+
+``` bash
+npm init -y
+```
+
+## 2. 登录 NPM
+
+``` bash
+npm login
+npm whoami
+```
+
+## 3. 修改版本号
+
+``` bash
+npm version patch   # 修复 bug
+npm version minor   # 新增功能
+npm version major   # 不兼容更新
+```
+
+## 4. 发布包
+
+``` bash
+npm publish --access public
+```
+
+## 5. 常用命令
+
+``` bash
+npm info 包名
+npm view 包名 versions
+npm pack
+npm deprecate 包名 "提示信息"
+```
+
+------------------------------------------------------------------------
+
+👉 **发包常用流程** 1. 登录 `npm login` 2. 修改版本号
+`npm version patch` 3. 发布 `npm publish`
