@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
-authors: 吴敬
+slug: week-1
+title: 第一周
 ---
 
 # 第一周
@@ -9,7 +10,7 @@ authors: 吴敬
 
 别做井底之蛙。
 
-1. [字母’x’在CSS世界中的角色和故事](https://www.zhangxinxu.com/wordpress/2015/06/about-letter-x-of-css/)
+1. [字母'x'在CSS世界中的角色和故事](https://www.zhangxinxu.com/wordpress/2015/06/about-letter-x-of-css/)
 
 一篇介绍关于在 css 世界中 baseline 的文章，讲得很不错。也可以看这个博主的其他相关文章，写得也很好。
 
@@ -44,3 +45,4 @@ authors: 吴敬
 - [地鼠文档](https://www.topgoer.cn/) 这是关于 go 语言学习的。
 
 当然还有很多优秀的资源在 UP 主的[编程导航](https://www.code-nav.cn/)中发现。
+

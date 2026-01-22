@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
-authors: 吴敬
-
+slug: indexed-priority-queue
+title: 索引优先队列
 ---
 
 # 索引优先队列
@@ -75,7 +75,7 @@ public class IndexMinPQ<Item extends Comparable<Item>> {
          */
         items[k] = null;
         swapPQ(qp[k], n);
-        // 维护为“空”
+        // 维护为"空"
         qp[pq[n]] = -1;
         pq[n] = 0;
         // 维护长度
@@ -104,7 +104,7 @@ public class IndexMinPQ<Item extends Comparable<Item>> {
         items[pq[1]] = null;
         // 交换最后一个元素和第一个元素
         swapPQ(1, n);
-        // 将对应的数据都设置成“空”
+        // 将对应的数据都设置成"空"
         qp[pq[n]] = -1;
         pq[n] = 0;
         // 维护 n 的值
