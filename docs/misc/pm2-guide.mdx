@@ -1,0 +1,285 @@
+---
+sidebar_position: 4
+slug: pm2-guide
+title: PM2 使用指南
+description: Node.js 进程管理工具 PM2 的完整使用指南
+---
+
+# PM2 使用指南
+
+PM2 是一个功能强大的 Node.js 进程管理工具，用于在生产环境中管理和保持应用程序持续运行。
+
+## 📦 安装
+
+```bash
+# 全局安装 PM2
+npm install pm2 -g
+
+# 或使用 yarn
+yarn global add pm2
+```
+
+## 🚀 基本使用
+
+### 启动应用
+
+```bash
+# 启动应用
+pm2 start app.js
+
+# 指定应用名称
+pm2 start app.js --name "my-app"
+
+# 启动并监听文件变化（开发模式）
+pm2 start app.js --watch
+
+# 启动时指定实例数量（集群模式）
+pm2 start app.js -i max  # 使用所有 CPU 核心
+pm2 start app.js -i 4    # 启动 4 个实例
+```
+
+### 常用启动参数
+
+```bash
+# 设置环境变量
+pm2 start app.js --env production
+
+# 指定日志文件
+pm2 start app.js --log /path/to/log.log
+
+# 设置内存限制，超过后自动重启
+pm2 start app.js --max-memory-restart 200M
+
+# 延迟重启（崩溃后等待 3 秒再重启）
+pm2 start app.js --restart-delay 3000
+```
+
+## 📋 进程管理
+
+### 查看进程列表
+
+```bash
+# 查看所有进程
+pm2 list
+
+# 查看详细信息
+pm2 show <app-name>
+
+# 实时监控面板
+pm2 monit
+```
+
+### 控制进程
+
+```bash
+# 重启应用
+pm2 restart <app-name>
+pm2 restart all          # 重启所有
+
+# 停止应用
+pm2 stop <app-name>
+pm2 stop all             # 停止所有
+
+# 删除应用
+pm2 delete <app-name>
+pm2 delete all           # 删除所有
+
+# 重载应用（零停机重启，适用于集群模式）
+pm2 reload <app-name>
+pm2 reload all
+```
+
+## 📝 日志管理
+
+```bash
+# 查看所有日志
+pm2 logs
+
+# 查看指定应用日志
+pm2 logs <app-name>
+
+# 查看最近 200 行日志
+pm2 logs --lines 200
+
+# 清空日志
+pm2 flush
+
+# 日志轮转（需要安装 pm2-logrotate）
+pm2 install pm2-logrotate
+```
+
+## ⚙️ 配置文件
+
+使用配置文件可以更方便地管理复杂的应用配置。
+
+### 生成配置文件
+
+```bash
+pm2 ecosystem
+```
+
+### ecosystem.config.js 示例
+
+```javascript
+module.exports = {
+  apps: [
+    {
+      name: 'my-app',
+      script: './app.js',
+      instances: 'max',
+      exec_mode: 'cluster',
+      watch: false,
+      max_memory_restart: '1G',
+      env: {
+        NODE_ENV: 'development',
+        PORT: 3000
+      },
+      env_production: {
+        NODE_ENV: 'production',
+        PORT: 8080
+      },
+      // 日志配置
+      log_date_format: 'YYYY-MM-DD HH:mm:ss',
+      error_file: './logs/error.log',
+      out_file: './logs/out.log',
+      merge_logs: true,
+      // 重启策略
+      max_restarts: 10,
+      restart_delay: 4000,
+      autorestart: true
+    }
+  ],
+  
+  // 部署配置（可选）
+  deploy: {
+    production: {
+      user: 'root',
+      host: 'your-server.com',
+      ref: 'origin/main',
+      repo: 'git@github.com:user/repo.git',
+      path: '/var/www/production',
+      'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production'
+    }
+  }
+};
+```
+
+### 使用配置文件启动
+
+```bash
+# 启动所有应用
+pm2 start ecosystem.config.js
+
+# 启动指定应用
+pm2 start ecosystem.config.js --only my-app
+
+# 使用生产环境配置
+pm2 start ecosystem.config.js --env production
+```
+
+## 🔄 开机自启动
+
+```bash
+# 生成启动脚本
+pm2 startup
+
+# 保存当前进程列表
+pm2 save
+
+# 恢复之前保存的进程
+pm2 resurrect
+
+# 取消开机自启动
+pm2 unstartup
+```
+
+## 📊 监控与诊断
+
+```bash
+# 实时监控面板
+pm2 monit
+
+# 查看进程详情
+pm2 describe <app-name>
+
+# 查看进程信息（JSON 格式）
+pm2 jlist
+
+# 重置重启计数
+pm2 reset <app-name>
+```
+
+## 🌐 PM2 Plus（可选）
+
+PM2 提供了一个 Web 监控平台 PM2 Plus：
+
+```bash
+# 连接到 PM2 Plus
+pm2 plus
+```
+
+## 💡 常用技巧
+
+### 快速重启所有应用
+
+```bash
+pm2 restart all --update-env
+```
+
+### 优雅关闭应用
+
+在代码中处理 `SIGINT` 信号：
+
+```javascript
+process.on('SIGINT', () => {
+  // 清理资源
+  db.close();
+  server.close(() => {
+    process.exit(0);
+  });
+});
+```
+
+### 查看 CPU 和内存使用
+
+```bash
+pm2 monit
+```
+
+### 集群模式下零停机更新
+
+```bash
+pm2 reload all
+```
+
+## ❓ 常见问题
+
+### Q1: 应用频繁重启
+
+检查日志找出崩溃原因：
+
+```bash
+pm2 logs <app-name> --lines 100
+```
+
+### Q2: 内存持续增长
+
+设置内存限制自动重启：
+
+```bash
+pm2 start app.js --max-memory-restart 500M
+```
+
+### Q3: 如何查看应用状态
+
+```bash
+pm2 status
+# 或
+pm2 list
+```
+
+## 📚 参考资料
+
+- [PM2 官方文档](https://pm2.keymetrics.io/docs/usage/quick-start/)
+- [PM2 GitHub](https://github.com/Unitech/pm2)
+

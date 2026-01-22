@@ -1,9 +1,9 @@
 {
-  "label": "周报",
+  "label": "Weekly Report",
   "position": 2,
   "link": {
     "type": "generated-index",
-    "description": "每周学习记录与资源分享"
+    "description": "Weekly learning notes and resource sharing"
   }
 }
 
