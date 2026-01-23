@@ -1,47 +1,64 @@
 ---
 sidebar_position: 1
+slug: /
+title: 欢迎
+description: Hweos 的技术博客 - 探索技术的无限可能
 ---
 
-# Tutorial Intro
+# 👋 欢迎来到 Hweos
 
-Let's discover **Docusaurus in less than 5 minutes**.
+> 天赋不能带来的东西，努力或许可以改变。
 
-## Getting Started
+这里是我的个人技术博客，记录着我在技术道路上的学习与成长。
 
-Get started by **creating a new site**.
+## 🎯 关于这个站点
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+这个网站使用 [Docusaurus](https://docusaurus.io/) 构建，主要用于：
 
-### What you'll need
+- 📚 **技术文档** - 系统化的学习笔记和知识整理
+- ✍️ **博客文章** - 技术分享和个人思考
+- 🔧 **实用指南** - 开发工具和最佳实践
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+## 📂 内容导航
 
-## Generate a new site
+### 数据结构与算法
 
-Generate a new Docusaurus site using the **classic template**.
+深入理解底层原理，构建扎实的编程基础。
 
-The classic template will automatically be added to your project after you run the command:
+- [索引优先队列](/docs/data-structures-algorithms/indexed-priority-queue) - 理解堆的高级应用
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+### 开发工具指南
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+提升开发效率的实用工具和技巧。
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+- [PM2 使用指南](/docs/misc/pm2-guide) - Node.js 进程管理
+- [SSH 配置指南](/docs/misc/ssh-config) - MacBook SSH 密钥配置
+- [NPM 发包指南](/docs/misc/npm-publishing) - 如何发布 NPM 包
 
-## Start your site
+### React 进阶
 
-Run the development server:
+React 性能优化与最佳实践。
 
-```bash
-cd my-website
-npm run start
-```
+- [React 性能优化](/docs/misc/react-performance) - useMemo、useCallback、memo 的正确使用
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+## 🛠️ 技术栈
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+这个站点涉及的技术领域包括但不限于：
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+| 领域 | 技术 |
+|-----|------|
+| 前端 | React, Vue, TypeScript, CSS |
+| 后端 | Node.js, Java, Go |
+| 移动端 | React Native, Android, iOS |
+| 工具 | Git, Docker, PM2, Webpack |
+| 其他 | 算法, 数据结构, 系统设计 |
+
+## 📬 联系我
+
+- **GitHub**: [@HuangZhe007](https://github.com/HuangZhe007)
+
+---
+
+:::tip 开始探索
+选择左侧导航栏中的任意文档开始阅读，或者访问 [博客](/blog) 查看最新文章。
+:::

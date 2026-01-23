@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Hweos',
-  tagline: 'Dinosaurs are cool',
+  tagline: '探索技术的无限可能',
   favicon: 'img/favicon.ico',
   deploymentBranch: 'main',
 
@@ -73,9 +73,9 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'Test',
+      title: 'Hweos',
       logo: {
-        alt: 'Test Logo',
+        alt: 'Hweos Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -102,46 +102,42 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: '📚 文档',
           items: [
             {
-              label: 'Docs',
+              label: '快速开始',
               to: '/docs/intro',
             },
-          ],
-        },
-        {
-          title: 'Community',
-          items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: '数据结构与算法',
+              to: '/docs/data-structures-algorithms/indexed-priority-queue',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: '开发工具',
+              to: '/docs/misc/pm2-guide',
             },
           ],
         },
         {
-          title: 'More',
+          title: '🔗 链接',
           items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
             {
               label: 'GitHub',
               href: 'https://github.com/hweos/git-pages',
             },
           ],
         },
+        {
+          title: '✍️ 更多',
+          items: [
+            {
+              label: '博客',
+              to: '/blog',
+            },
+          ],
+        },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Hweos. Built with 💙 and Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

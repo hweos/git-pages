@@ -1,11 +1,223 @@
+/**
+ * Homepage Features - Card-based Modern Design
+ */
+
+/* ============================================
+   Section Styles
+   ============================================ */
 .features {
-  display: flex;
-  align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+  padding: 5rem 0;
+  background: linear-gradient(180deg, transparent 0%, var(--custom-bg-gradient-start) 100%);
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+[data-theme='dark'] .features {
+  background: linear-gradient(180deg, transparent 0%, rgba(30, 41, 59, 0.5) 100%);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--ifm-heading-color);
+}
+
+.sectionEmoji {
+  display: inline-block;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.sectionSubtitle {
+  font-size: 1.1rem;
+  color: var(--custom-text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ============================================
+   Feature Grid
+   ============================================ */
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* ============================================
+   Feature Card
+   ============================================ */
+.featureCard {
+  background: var(--custom-card-bg);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInUp 0.6s ease-out backwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.featureCard:nth-child(1) { animation-delay: 0.1s; }
+.featureCard:nth-child(2) { animation-delay: 0.2s; }
+.featureCard:nth-child(3) { animation-delay: 0.3s; }
+
+[data-theme='dark'] .featureCard {
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.featureCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--feature-color, #0891b2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--feature-color, var(--ifm-color-primary));
+}
+
+[data-theme='dark'] .featureCard:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.featureCard:hover::before {
+  opacity: 1;
+}
+
+/* ============================================
+   Feature Icon
+   ============================================ */
+.featureIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.featureCard:hover .featureIcon {
+  transform: scale(1.1) rotate(-5deg);
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+}
+
+.emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+/* ============================================
+   Feature Content
+   ============================================ */
+.featureContent {
+  position: relative;
+  z-index: 1;
+}
+
+.featureTitle {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--ifm-heading-color);
+  transition: color 0.3s ease;
+}
+
+.featureCard:hover .featureTitle {
+  color: var(--ifm-color-primary);
+}
+
+.featureDescription {
+  color: var(--custom-text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.featureLink {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.featureLink:hover {
+  color: var(--ifm-color-primary-dark);
+  text-decoration: none;
+  gap: 0.5rem;
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media screen and (max-width: 996px) {
+  .features {
+    padding: 3rem 1.5rem;
+  }
+
+  .featureGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .featureGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .featureCard {
+    padding: 1.5rem;
+  }
+
+  .sectionHeader {
+    margin-bottom: 2rem;
+  }
 }

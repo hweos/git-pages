@@ -1,0 +1,44 @@
+---
+sidebar_position: 5
+slug: live-code
+title: Live Code 演示
+id: live-code
+description: 在文档中使用交互式代码编辑器
+---
+
+# Live Code 实时代码演示
+
+Docusaurus 支持在文档中嵌入可交互的代码编辑器，让读者可以直接修改代码并实时查看效果。
+
+## 基本用法
+
+在代码块的语言标识后添加 `live` 关键字即可启用实时编辑功能：
+
+````markdown
+```jsx live
+function Demo(props) {
+  return <button onClick={() => alert("hey!")}>Click me</button>;
+}
+```
+````
+
+## 效果展示
+
+下面是一个可交互的代码示例，你可以直接修改代码查看效果：
+
+```jsx live
+function Demo(props) {
+  return <button onClick={() => alert("hey!")}>Click me</button>;
+}
+```
+
+:::tip 提示
+修改代码后，右侧预览区域会实时更新显示结果。
+:::
+
+## 适用场景
+
+- 📚 **教程文档** - 让读者边学边练
+- 🎮 **组件演示** - 展示 UI 组件的各种用法
+- 🧪 **代码实验** - 提供安全的代码实验环境
+

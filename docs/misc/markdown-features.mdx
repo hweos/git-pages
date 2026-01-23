@@ -1,0 +1,133 @@
+---
+sidebar_position: 6
+slug: markdown-features
+title: Markdown 功能速查
+id: markdown-features
+description: Docusaurus 支持的 Markdown 扩展功能
+---
+
+# Markdown 功能速查
+
+Docusaurus 支持标准 **[Markdown](https://daringfireball.net/projects/markdown/syntax)** 语法以及一些扩展功能。
+
+## Front Matter
+
+Markdown 文档顶部可以添加元数据：
+
+```yaml title="my-doc.md"
+---
+id: my-doc-id
+title: 文档标题
+description: 文档描述
+slug: /custom-url
+---
+```
+
+## 图片
+
+使用标准 Markdown 语法插入图片：
+
+```md
+![Docusaurus logo](/img/docusaurus.png)
+```
+
+![Docusaurus logo](/img/docusaurus.png)
+
+## 代码块
+
+支持语法高亮的代码块：
+
+```jsx title="src/components/HelloDocusaurus.js"
+function HelloDocusaurus() {
+  return <h1>Hello, Docusaurus!</h1>;
+}
+```
+
+## 提示框 (Admonitions)
+
+Docusaurus 支持多种类型的提示框：
+
+:::tip 小贴士
+这是一个有用的提示信息。
+:::
+
+:::info 信息
+这是一条普通信息。
+:::
+
+:::warning 警告
+请注意这个警告。
+:::
+
+:::danger 危险
+这个操作可能有风险！
+:::
+
+### 语法示例
+
+```markdown
+:::tip 小贴士
+这是一个有用的提示信息。
+:::
+
+:::danger 危险
+这个操作可能有风险！
+:::
+```
+
+## MDX 和 React 组件
+
+[MDX](https://mdxjs.com/) 让你可以在 Markdown 中使用 React 组件：
+
+```jsx
+export const Highlight = ({children, color}) => (
+  <span
+    style={{
+      backgroundColor: color,
+      borderRadius: '20px',
+      color: '#fff',
+      padding: '10px',
+      cursor: 'pointer',
+    }}
+    onClick={() => {
+      alert(`你点击了 ${color} 色的 ${children}`)
+    }}>
+    {children}
+  </span>
+);
+
+This is <Highlight color="#0891b2">Cyan</Highlight> !
+```
+
+export const Highlight = ({children, color}) => (
+  <span
+    style={{
+      backgroundColor: color,
+      borderRadius: '20px',
+      color: '#fff',
+      padding: '10px',
+      cursor: 'pointer',
+    }}
+    onClick={() => {
+      alert(`你点击了 ${color} 色的 ${children}`);
+    }}>
+    {children}
+  </span>
+);
+
+点击试试：<Highlight color="#0891b2">Cyan 青色</Highlight> <Highlight color="#8b5cf6">Purple 紫色</Highlight>
+
+## 表格
+
+| 功能 | 支持情况 |
+|-----|---------|
+| 标准 Markdown | ✅ |
+| 代码高亮 | ✅ |
+| 提示框 | ✅ |
+| MDX | ✅ |
+| Live Code | ✅ |
+
+---
+
+更多功能请参考 [Docusaurus 官方文档](https://docusaurus.io/docs/markdown-features)。
+

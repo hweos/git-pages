@@ -1,56 +1,68 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
+import Link from '@docusaurus/Link';
 import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  emoji: string;
   description: ReactNode;
+  link: string;
+  color: string;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: '数据结构与算法',
+    emoji: '🧮',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        深入理解数据结构的本质，掌握常见算法的设计思想。
+        从索引优先队列到图算法，一步步构建扎实的基础。
       </>
     ),
+    link: '/docs/data-structures-algorithms/indexed-priority-queue',
+    color: '#0891b2',
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: '开发工具指南',
+    emoji: '🛠️',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        PM2 进程管理、SSH 配置、NPM 发包流程...
+        提升开发效率的实用工具和技巧都在这里。
       </>
     ),
+    link: '/docs/misc/pm2-guide',
+    color: '#8b5cf6',
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'React 性能优化',
+    emoji: '⚡',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        useMemo、useCallback、memo 的正确使用姿势。
+        通过实战案例学习如何让你的 React 应用飞起来。
       </>
     ),
+    link: '/docs/misc/react-performance',
+    color: '#f59e0b',
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, emoji, description, link, color}: FeatureItem) {
   return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+    <div className={styles.featureCard}>
+      <div className={styles.featureIcon} style={{'--feature-color': color} as React.CSSProperties}>
+        <span className={styles.emoji}>{emoji}</span>
       </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
+      <div className={styles.featureContent}>
+        <Heading as="h3" className={styles.featureTitle}>{title}</Heading>
+        <p className={styles.featureDescription}>{description}</p>
+        <Link to={link} className={styles.featureLink}>
+          了解更多 →
+        </Link>
       </div>
     </div>
   );
@@ -60,7 +72,15 @@ export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
-        <div className="row">
+        <div className={styles.sectionHeader}>
+          <Heading as="h2" className={styles.sectionTitle}>
+            <span className={styles.sectionEmoji}>✨</span> 精选内容
+          </Heading>
+          <p className={styles.sectionSubtitle}>
+            这里汇集了我在学习和工作中的经验总结，希望对你有所帮助
+          </p>
+        </div>
+        <div className={styles.featureGrid}>
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}
