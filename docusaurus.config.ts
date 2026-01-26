@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Hweos',
   tagline: '探索技术的无限可能',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
   deploymentBranch: 'main',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
