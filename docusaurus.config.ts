@@ -16,7 +16,7 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://endiliey.github.io',
+  url: 'https://hweos.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -43,7 +43,6 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
           editUrl: 'https://github.com/hweos/git-pages/edit/main/',
         },
         blog: {
@@ -52,20 +51,32 @@ const config: Config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/hweos/git-pages/edit/main/',
-
-          // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
-          // Please change this to your repo.
         },
         theme: {
           customCss: './src/css/custom.css',
         },
       } satisfies Preset.Options,
+    ],
+  ],
+
+  themes: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      {
+        hashed: true,
+        language: ['en', 'zh'],
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
+        docsRouteBasePath: '/docs',
+        blogRouteBasePath: '/blog',
+        indexDocs: true,
+        indexBlog: true,
+        indexPages: false,
+      },
     ],
   ],
 
@@ -87,11 +98,6 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
-          position: 'right',
-          type: 'localeDropdown',
-        },
-        {
           href: 'https://github.com/hweos/git-pages',
           label: 'GitHub',
           position: 'right',
@@ -106,7 +112,7 @@ const config: Config = {
           items: [
             {
               label: '快速开始',
-              to: '/docs/intro',
+              to: '/docs/',
             },
             {
               label: '数据结构与算法',

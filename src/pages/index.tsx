@@ -22,7 +22,7 @@ function HomepageHeader() {
             这里有算法笔记、开发指南和最佳实践。
           </p>
           <div className={styles.buttons}>
-            <Link className={styles.primaryButton} to="/docs/intro">
+            <Link className={styles.primaryButton} to="/docs/">
               📚 开始阅读
             </Link>
             <Link className={styles.secondaryButton} to="/blog">
