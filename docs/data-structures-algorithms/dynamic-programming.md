@@ -43,8 +43,8 @@ description: 动态规划的核心思想、解题模板与经典例题
 
 ### 递归（会超时）
 
-```java
-public int fib(int n) {
+```javascript
+function fib(n) {
     if (n <= 1) return n;
     return fib(n - 1) + fib(n - 2);  // 大量重复计算
 }
@@ -52,33 +52,24 @@ public int fib(int n) {
 
 ### 记忆化搜索
 
-```java
-public int fib(int n) {
-    int[] memo = new int[n + 1];
-    Arrays.fill(memo, -1);
-    return helper(n, memo);
-}
-
-private int helper(int n, int[] memo) {
+```javascript
+function fib(n, memo = {}) {
     if (n <= 1) return n;
-    if (memo[n] != -1) return memo[n];
+    if (memo[n] !== undefined) return memo[n];
     
-    memo[n] = helper(n - 1, memo) + helper(n - 2, memo);
+    memo[n] = fib(n - 1, memo) + fib(n - 2, memo);
     return memo[n];
 }
 ```
 
 ### 动态规划
 
-```java
-public int fib(int n) {
+```javascript
+function fib(n) {
     if (n <= 1) return n;
     
-    int[] dp = new int[n + 1];
-    dp[0] = 0;
-    dp[1] = 1;
-    
-    for (int i = 2; i <= n; i++) {
+    const dp = [0, 1];
+    for (let i = 2; i <= n; i++) {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
     
@@ -88,13 +79,13 @@ public int fib(int n) {
 
 ### 空间优化
 
-```java
-public int fib(int n) {
+```javascript
+function fib(n) {
     if (n <= 1) return n;
     
-    int prev2 = 0, prev1 = 1;
-    for (int i = 2; i <= n; i++) {
-        int curr = prev1 + prev2;
+    let prev2 = 0, prev1 = 1;
+    for (let i = 2; i <= n; i++) {
+        const curr = prev1 + prev2;
         prev2 = prev1;
         prev1 = curr;
     }
@@ -117,21 +108,6 @@ public int fib(int n) {
 - `dp[n] = dp[n-1] + dp[n-2]`
 
 ### 实现
-
-```java
-public int climbStairs(int n) {
-    if (n <= 2) return n;
-    
-    int prev2 = 1, prev1 = 2;
-    for (int i = 3; i <= n; i++) {
-        int curr = prev1 + prev2;
-        prev2 = prev1;
-        prev1 = curr;
-    }
-    
-    return prev1;
-}
-```
 
 ```javascript
 function climbStairs(n) {
@@ -162,20 +138,6 @@ function climbStairs(n) {
 - `dp[i] = max(dp[i-1] + nums[i], nums[i])`
 
 ### 实现
-
-```java
-public int maxSubArray(int[] nums) {
-    int maxSum = nums[0];
-    int currSum = nums[0];
-    
-    for (int i = 1; i < nums.length; i++) {
-        currSum = Math.max(currSum + nums[i], nums[i]);
-        maxSum = Math.max(maxSum, currSum);
-    }
-    
-    return maxSum;
-}
-```
 
 ```javascript
 function maxSubArray(nums) {
@@ -209,22 +171,6 @@ function maxSubArray(nums) {
 
 ### 实现
 
-```java
-public int rob(int[] nums) {
-    if (nums.length == 1) return nums[0];
-    
-    int prev2 = 0, prev1 = 0;
-    
-    for (int num : nums) {
-        int curr = Math.max(prev2 + num, prev1);
-        prev2 = prev1;
-        prev1 = curr;
-    }
-    
-    return prev1;
-}
-```
-
 ```javascript
 function rob(nums) {
     let prev2 = 0, prev1 = 0;
@@ -256,20 +202,19 @@ function rob(nums) {
 
 ### 实现
 
-```java
-public int knapsack(int[] w, int[] v, int W) {
-    int n = w.length;
-    int[][] dp = new int[n + 1][W + 1];
+```javascript
+function knapsack(w, v, W) {
+    const n = w.length;
+    const dp = Array.from({ length: n + 1 }, () => Array(W + 1).fill(0));
     
-    for (int i = 1; i <= n; i++) {
-        for (int j = 0; j <= W; j++) {
+    for (let i = 1; i <= n; i++) {
+        for (let j = 0; j <= W; j++) {
             // 不选第 i 个物品
             dp[i][j] = dp[i - 1][j];
             
             // 选第 i 个物品
             if (j >= w[i - 1]) {
-                dp[i][j] = Math.max(dp[i][j], 
-                    dp[i - 1][j - w[i - 1]] + v[i - 1]);
+                dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - w[i - 1]] + v[i - 1]);
             }
         }
     }
@@ -280,13 +225,13 @@ public int knapsack(int[] w, int[] v, int W) {
 
 ### 空间优化（一维数组）
 
-```java
-public int knapsack(int[] w, int[] v, int W) {
-    int[] dp = new int[W + 1];
+```javascript
+function knapsack(w, v, W) {
+    const dp = Array(W + 1).fill(0);
     
-    for (int i = 0; i < w.length; i++) {
+    for (let i = 0; i < w.length; i++) {
         // 必须逆序遍历，避免重复使用同一物品
-        for (int j = W; j >= w[i]; j--) {
+        for (let j = W; j >= w[i]; j--) {
             dp[j] = Math.max(dp[j], dp[j - w[i]] + v[i]);
         }
     }
@@ -314,15 +259,14 @@ public int knapsack(int[] w, int[] v, int W) {
 
 ### O(n²) 实现
 
-```java
-public int lengthOfLIS(int[] nums) {
-    int n = nums.length;
-    int[] dp = new int[n];
-    Arrays.fill(dp, 1);
-    int maxLen = 1;
+```javascript
+function lengthOfLIS(nums) {
+    const n = nums.length;
+    const dp = Array(n).fill(1);
+    let maxLen = 1;
     
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
+    for (let i = 1; i < n; i++) {
+        for (let j = 0; j < i; j++) {
             if (nums[j] < nums[i]) {
                 dp[i] = Math.max(dp[i], dp[j] + 1);
             }
@@ -336,22 +280,31 @@ public int lengthOfLIS(int[] nums) {
 
 ### O(n log n) 优化
 
-```java
-public int lengthOfLIS(int[] nums) {
-    List<Integer> tails = new ArrayList<>();
+```javascript
+function lengthOfLIS(nums) {
+    const tails = [];
     
-    for (int num : nums) {
-        int pos = Collections.binarySearch(tails, num);
-        if (pos < 0) pos = -(pos + 1);
+    for (const num of nums) {
+        let left = 0, right = tails.length;
         
-        if (pos == tails.size()) {
-            tails.add(num);
+        // 二分查找
+        while (left < right) {
+            const mid = Math.floor((left + right) / 2);
+            if (tails[mid] < num) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        
+        if (left === tails.length) {
+            tails.push(num);
         } else {
-            tails.set(pos, num);
+            tails[left] = num;
         }
     }
     
-    return tails.size();
+    return tails.length;
 }
 ```
 

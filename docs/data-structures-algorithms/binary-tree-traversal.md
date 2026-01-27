@@ -11,18 +11,6 @@ description: 二叉树的前序、中序、后序和层序遍历详解
 
 ## 🌲 二叉树节点定义
 
-```java
-public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    
-    TreeNode(int val) {
-        this.val = val;
-    }
-}
-```
-
 ```javascript
 class TreeNode {
     constructor(val) {
@@ -62,44 +50,23 @@ class TreeNode {
 
 ### 递归实现
 
-```java
-public List<Integer> preorderTraversal(TreeNode root) {
-    List<Integer> result = new ArrayList<>();
-    preorder(root, result);
-    return result;
-}
-
-private void preorder(TreeNode node, List<Integer> result) {
-    if (node == null) return;
+```javascript
+function preorderTraversal(root) {
+    const result = [];
     
-    result.add(node.val);        // 访问根节点
-    preorder(node.left, result);  // 遍历左子树
-    preorder(node.right, result); // 遍历右子树
+    function preorder(node) {
+        if (!node) return;
+        result.push(node.val);    // 访问根节点
+        preorder(node.left);       // 遍历左子树
+        preorder(node.right);      // 遍历右子树
+    }
+    
+    preorder(root);
+    return result;
 }
 ```
 
 ### 迭代实现
-
-```java
-public List<Integer> preorderTraversal(TreeNode root) {
-    List<Integer> result = new ArrayList<>();
-    if (root == null) return result;
-    
-    Stack<TreeNode> stack = new Stack<>();
-    stack.push(root);
-    
-    while (!stack.isEmpty()) {
-        TreeNode node = stack.pop();
-        result.add(node.val);
-        
-        // 先压右子节点，再压左子节点（后进先出）
-        if (node.right != null) stack.push(node.right);
-        if (node.left != null) stack.push(node.left);
-    }
-    
-    return result;
-}
-```
 
 ```javascript
 function preorderTraversal(root) {
@@ -112,6 +79,7 @@ function preorderTraversal(root) {
         const node = stack.pop();
         result.push(node.val);
         
+        // 先压右子节点，再压左子节点（后进先出）
         if (node.right) stack.push(node.right);
         if (node.left) stack.push(node.left);
     }
@@ -132,48 +100,23 @@ function preorderTraversal(root) {
 
 ### 递归实现
 
-```java
-public List<Integer> inorderTraversal(TreeNode root) {
-    List<Integer> result = new ArrayList<>();
-    inorder(root, result);
-    return result;
-}
-
-private void inorder(TreeNode node, List<Integer> result) {
-    if (node == null) return;
+```javascript
+function inorderTraversal(root) {
+    const result = [];
     
-    inorder(node.left, result);   // 遍历左子树
-    result.add(node.val);         // 访问根节点
-    inorder(node.right, result);  // 遍历右子树
+    function inorder(node) {
+        if (!node) return;
+        inorder(node.left);        // 遍历左子树
+        result.push(node.val);     // 访问根节点
+        inorder(node.right);       // 遍历右子树
+    }
+    
+    inorder(root);
+    return result;
 }
 ```
 
 ### 迭代实现
-
-```java
-public List<Integer> inorderTraversal(TreeNode root) {
-    List<Integer> result = new ArrayList<>();
-    Stack<TreeNode> stack = new Stack<>();
-    TreeNode curr = root;
-    
-    while (curr != null || !stack.isEmpty()) {
-        // 一直往左走，将所有左节点压栈
-        while (curr != null) {
-            stack.push(curr);
-            curr = curr.left;
-        }
-        
-        // 弹出栈顶节点
-        curr = stack.pop();
-        result.add(curr.val);
-        
-        // 转向右子树
-        curr = curr.right;
-    }
-    
-    return result;
-}
-```
 
 ```javascript
 function inorderTraversal(root) {
@@ -182,13 +125,17 @@ function inorderTraversal(root) {
     let curr = root;
     
     while (curr || stack.length) {
+        // 一直往左走，将所有左节点压栈
         while (curr) {
             stack.push(curr);
             curr = curr.left;
         }
         
+        // 弹出栈顶节点
         curr = stack.pop();
         result.push(curr.val);
+        
+        // 转向右子树
         curr = curr.right;
     }
     
@@ -204,47 +151,26 @@ function inorderTraversal(root) {
 
 ### 递归实现
 
-```java
-public List<Integer> postorderTraversal(TreeNode root) {
-    List<Integer> result = new ArrayList<>();
-    postorder(root, result);
-    return result;
-}
-
-private void postorder(TreeNode node, List<Integer> result) {
-    if (node == null) return;
+```javascript
+function postorderTraversal(root) {
+    const result = [];
     
-    postorder(node.left, result);  // 遍历左子树
-    postorder(node.right, result); // 遍历右子树
-    result.add(node.val);          // 访问根节点
+    function postorder(node) {
+        if (!node) return;
+        postorder(node.left);      // 遍历左子树
+        postorder(node.right);     // 遍历右子树
+        result.push(node.val);     // 访问根节点
+    }
+    
+    postorder(root);
+    return result;
 }
 ```
 
 ### 迭代实现
 
-```java
-// 技巧：后序 = 前序（根右左）的逆序
-public List<Integer> postorderTraversal(TreeNode root) {
-    LinkedList<Integer> result = new LinkedList<>();
-    if (root == null) return result;
-    
-    Stack<TreeNode> stack = new Stack<>();
-    stack.push(root);
-    
-    while (!stack.isEmpty()) {
-        TreeNode node = stack.pop();
-        result.addFirst(node.val);  // 头插法
-        
-        // 先压左，再压右
-        if (node.left != null) stack.push(node.left);
-        if (node.right != null) stack.push(node.right);
-    }
-    
-    return result;
-}
-```
-
 ```javascript
+// 技巧：后序 = 前序（根右左）的逆序
 function postorderTraversal(root) {
     const result = [];
     if (!root) return result;
@@ -253,8 +179,9 @@ function postorderTraversal(root) {
     
     while (stack.length) {
         const node = stack.pop();
-        result.unshift(node.val);  // 头部插入
+        result.unshift(node.val);  // 头插法
         
+        // 先压左，再压右
         if (node.left) stack.push(node.left);
         if (node.right) stack.push(node.right);
     }
@@ -270,33 +197,6 @@ function postorderTraversal(root) {
 **顺序**：逐层从左到右遍历
 
 ### BFS 实现
-
-```java
-public List<List<Integer>> levelOrder(TreeNode root) {
-    List<List<Integer>> result = new ArrayList<>();
-    if (root == null) return result;
-    
-    Queue<TreeNode> queue = new LinkedList<>();
-    queue.offer(root);
-    
-    while (!queue.isEmpty()) {
-        int levelSize = queue.size();
-        List<Integer> level = new ArrayList<>();
-        
-        for (int i = 0; i < levelSize; i++) {
-            TreeNode node = queue.poll();
-            level.add(node.val);
-            
-            if (node.left != null) queue.offer(node.left);
-            if (node.right != null) queue.offer(node.right);
-        }
-        
-        result.add(level);
-    }
-    
-    return result;
-}
-```
 
 ```javascript
 function levelOrder(root) {
@@ -330,31 +230,31 @@ function levelOrder(root) {
 
 Morris 遍历可以实现 **O(1) 空间复杂度**的遍历，利用叶子节点的空指针。
 
-```java
+```javascript
 // Morris 中序遍历
-public List<Integer> morrisInorder(TreeNode root) {
-    List<Integer> result = new ArrayList<>();
-    TreeNode curr = root;
+function morrisInorder(root) {
+    const result = [];
+    let curr = root;
     
-    while (curr != null) {
-        if (curr.left == null) {
-            result.add(curr.val);
+    while (curr) {
+        if (!curr.left) {
+            result.push(curr.val);
             curr = curr.right;
         } else {
             // 找到左子树的最右节点
-            TreeNode predecessor = curr.left;
-            while (predecessor.right != null && predecessor.right != curr) {
+            let predecessor = curr.left;
+            while (predecessor.right && predecessor.right !== curr) {
                 predecessor = predecessor.right;
             }
             
-            if (predecessor.right == null) {
+            if (!predecessor.right) {
                 // 建立线索
                 predecessor.right = curr;
                 curr = curr.left;
             } else {
                 // 恢复树结构
                 predecessor.right = null;
-                result.add(curr.val);
+                result.push(curr.val);
                 curr = curr.right;
             }
         }

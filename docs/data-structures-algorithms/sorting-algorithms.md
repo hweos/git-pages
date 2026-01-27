@@ -30,26 +30,6 @@ description: 常见排序算法的原理、实现与复杂度分析
 
 ### 实现
 
-```java
-public void bubbleSort(int[] arr) {
-    int n = arr.length;
-    for (int i = 0; i < n - 1; i++) {
-        boolean swapped = false;
-        for (int j = 0; j < n - 1 - i; j++) {
-            if (arr[j] > arr[j + 1]) {
-                // 交换
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-                swapped = true;
-            }
-        }
-        // 如果没有交换，说明已经有序
-        if (!swapped) break;
-    }
-}
-```
-
 ```javascript
 function bubbleSort(arr) {
     const n = arr.length;
@@ -61,6 +41,7 @@ function bubbleSort(arr) {
                 swapped = true;
             }
         }
+        // 如果没有交换，说明已经有序
         if (!swapped) break;
     }
     return arr;
@@ -77,36 +58,6 @@ function bubbleSort(arr) {
 
 ### 实现
 
-```java
-public void quickSort(int[] arr, int left, int right) {
-    if (left >= right) return;
-    
-    int pivot = partition(arr, left, right);
-    quickSort(arr, left, pivot - 1);
-    quickSort(arr, pivot + 1, right);
-}
-
-private int partition(int[] arr, int left, int right) {
-    int pivot = arr[right];  // 选择最右边的元素作为基准
-    int i = left - 1;
-    
-    for (int j = left; j < right; j++) {
-        if (arr[j] <= pivot) {
-            i++;
-            swap(arr, i, j);
-        }
-    }
-    swap(arr, i + 1, right);
-    return i + 1;
-}
-
-private void swap(int[] arr, int i, int j) {
-    int temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-}
-```
-
 ```javascript
 function quickSort(arr, left = 0, right = arr.length - 1) {
     if (left >= right) return arr;
@@ -118,7 +69,7 @@ function quickSort(arr, left = 0, right = arr.length - 1) {
 }
 
 function partition(arr, left, right) {
-    const pivot = arr[right];
+    const pivot = arr[right];  // 选择最右边的元素作为基准
     let i = left - 1;
     
     for (let j = left; j < right; j++) {
@@ -146,36 +97,6 @@ function partition(arr, left, right) {
 采用分治策略，将数组递归地分成两半，分别排序后再合并。
 
 ### 实现
-
-```java
-public void mergeSort(int[] arr, int left, int right) {
-    if (left >= right) return;
-    
-    int mid = left + (right - left) / 2;
-    mergeSort(arr, left, mid);
-    mergeSort(arr, mid + 1, right);
-    merge(arr, left, mid, right);
-}
-
-private void merge(int[] arr, int left, int mid, int right) {
-    int[] temp = new int[right - left + 1];
-    int i = left, j = mid + 1, k = 0;
-    
-    while (i <= mid && j <= right) {
-        if (arr[i] <= arr[j]) {
-            temp[k++] = arr[i++];
-        } else {
-            temp[k++] = arr[j++];
-        }
-    }
-    
-    while (i <= mid) temp[k++] = arr[i++];
-    while (j <= right) temp[k++] = arr[j++];
-    
-    // 复制回原数组
-    System.arraycopy(temp, 0, arr, left, temp.length);
-}
-```
 
 ```javascript
 function mergeSort(arr) {
@@ -214,26 +135,28 @@ function merge(left, right) {
 
 ### 实现
 
-```java
-public void heapSort(int[] arr) {
-    int n = arr.length;
+```javascript
+function heapSort(arr) {
+    const n = arr.length;
     
     // 建立大顶堆
-    for (int i = n / 2 - 1; i >= 0; i--) {
+    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
         heapify(arr, n, i);
     }
     
     // 依次取出堆顶
-    for (int i = n - 1; i > 0; i--) {
-        swap(arr, 0, i);
+    for (let i = n - 1; i > 0; i--) {
+        [arr[0], arr[i]] = [arr[i], arr[0]];
         heapify(arr, i, 0);
     }
+    
+    return arr;
 }
 
-private void heapify(int[] arr, int n, int i) {
-    int largest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
+function heapify(arr, n, i) {
+    let largest = i;
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
     
     if (left < n && arr[left] > arr[largest]) {
         largest = left;
@@ -242,8 +165,8 @@ private void heapify(int[] arr, int n, int i) {
         largest = right;
     }
     
-    if (largest != i) {
-        swap(arr, i, largest);
+    if (largest !== i) {
+        [arr[i], arr[largest]] = [arr[largest], arr[i]];
         heapify(arr, n, largest);
     }
 }
@@ -259,11 +182,11 @@ private void heapify(int[] arr, int n, int i) {
 
 ### 实现
 
-```java
-public void insertionSort(int[] arr) {
-    for (int i = 1; i < arr.length; i++) {
-        int key = arr[i];
-        int j = i - 1;
+```javascript
+function insertionSort(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        const key = arr[i];
+        let j = i - 1;
         
         // 将大于 key 的元素后移
         while (j >= 0 && arr[j] > key) {
@@ -272,12 +195,47 @@ public void insertionSort(int[] arr) {
         }
         arr[j + 1] = key;
     }
+    return arr;
 }
 ```
 
 :::info 适用场景
 插入排序在数据量小或基本有序时效率很高，常用于快速排序的优化。
 :::
+
+---
+
+## 6. 选择排序 (Selection Sort)
+
+### 原理
+
+每次从未排序部分找到最小元素，放到已排序部分的末尾。
+
+### 实现
+
+```javascript
+function selectionSort(arr) {
+    const n = arr.length;
+    
+    for (let i = 0; i < n - 1; i++) {
+        let minIndex = i;
+        
+        // 找到未排序部分的最小值
+        for (let j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        
+        // 交换
+        if (minIndex !== i) {
+            [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+        }
+    }
+    
+    return arr;
+}
+```
 
 ---
 
