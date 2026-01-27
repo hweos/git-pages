@@ -1,0 +1,363 @@
+---
+sidebar_position: 9
+slug: linux-commands
+title: Linux 常用命令
+description: Linux 文件操作、权限管理、进程管理命令速查
+---
+
+# Linux 常用命令
+
+开发者必备的 Linux 命令速查手册。
+
+## 📁 文件和目录
+
+### 导航
+
+```bash
+pwd                  # 当前目录
+cd /path/to/dir      # 切换目录
+cd ~                 # 回到主目录
+cd -                 # 回到上一个目录
+cd ..                # 上级目录
+```
+
+### 查看
+
+```bash
+ls                   # 列出文件
+ls -la               # 详细列表（含隐藏）
+ls -lh               # 人类可读大小
+ls -lt               # 按时间排序
+tree                 # 树形结构
+tree -L 2            # 限制深度
+```
+
+### 创建
+
+```bash
+touch file.txt       # 创建文件
+mkdir dir            # 创建目录
+mkdir -p a/b/c       # 递归创建
+```
+
+### 复制/移动/删除
+
+```bash
+cp file1 file2       # 复制文件
+cp -r dir1 dir2      # 复制目录
+mv file1 file2       # 移动/重命名
+rm file              # 删除文件
+rm -rf dir           # 强制删除目录
+```
+
+### 查找
+
+```bash
+find . -name "*.js"              # 按名称查找
+find . -type f -mtime -7         # 7天内修改的文件
+find . -size +100M               # 大于100M的文件
+locate filename                   # 快速查找（需updatedb）
+which node                        # 查找命令位置
+whereis nginx                     # 查找程序位置
+```
+
+---
+
+## 📄 文件内容
+
+### 查看
+
+```bash
+cat file             # 查看全部
+head -n 20 file      # 前20行
+tail -n 20 file      # 后20行
+tail -f file         # 实时跟踪
+less file            # 分页查看
+more file            # 分页查看
+```
+
+### 搜索
+
+```bash
+grep "pattern" file              # 搜索内容
+grep -r "pattern" dir            # 递归搜索
+grep -i "pattern" file           # 忽略大小写
+grep -n "pattern" file           # 显示行号
+grep -v "pattern" file           # 反向匹配
+grep -E "regex" file             # 正则表达式
+```
+
+### 编辑
+
+```bash
+nano file            # nano 编辑器
+vim file             # vim 编辑器
+# vim 基础: i-插入, Esc-退出插入, :wq-保存退出, :q!-强制退出
+```
+
+### 统计
+
+```bash
+wc -l file           # 行数
+wc -w file           # 单词数
+wc -c file           # 字节数
+du -sh dir           # 目录大小
+df -h                # 磁盘使用情况
+```
+
+---
+
+## 🔐 权限管理
+
+### 查看权限
+
+```bash
+ls -la
+# -rw-r--r-- 1 user group 1234 Jan 1 12:00 file
+# 类型 用户 组 其他
+```
+
+### 权限说明
+
+| 符号 | 数字 | 含义 |
+|------|------|------|
+| r | 4 | 读 |
+| w | 2 | 写 |
+| x | 1 | 执行 |
+
+### 修改权限
+
+```bash
+chmod 755 file       # rwxr-xr-x
+chmod 644 file       # rw-r--r--
+chmod +x script.sh   # 添加执行权限
+chmod -w file        # 移除写权限
+chmod -R 755 dir     # 递归修改
+```
+
+### 修改所有者
+
+```bash
+chown user file              # 修改所有者
+chown user:group file        # 修改所有者和组
+chown -R user:group dir      # 递归修改
+```
+
+---
+
+## ⚙️ 进程管理
+
+### 查看进程
+
+```bash
+ps aux               # 所有进程
+ps aux | grep node   # 过滤进程
+top                  # 动态查看
+htop                 # 更好的 top
+pgrep -f "node"      # 查找进程 PID
+```
+
+### 管理进程
+
+```bash
+kill PID             # 终止进程
+kill -9 PID          # 强制终止
+killall node         # 终止所有同名进程
+pkill -f "pattern"   # 按模式终止
+```
+
+### 后台运行
+
+```bash
+command &            # 后台运行
+nohup command &      # 断开终端后继续运行
+nohup command > output.log 2>&1 &
+jobs                 # 查看后台任务
+fg %1                # 调回前台
+bg %1                # 放到后台
+```
+
+---
+
+## 🌐 网络命令
+
+### 网络信息
+
+```bash
+ip addr              # IP 地址
+ifconfig             # 网络接口（旧）
+hostname             # 主机名
+hostname -I          # 本机 IP
+```
+
+### 网络测试
+
+```bash
+ping google.com      # 测试连通性
+curl https://api.example.com       # 请求 URL
+curl -I https://example.com        # 仅获取头信息
+wget https://example.com/file.zip  # 下载文件
+```
+
+### 端口查看
+
+```bash
+netstat -tulpn       # 查看监听端口
+ss -tulpn            # 更快的 netstat
+lsof -i :3000        # 查看端口占用
+```
+
+### 远程连接
+
+```bash
+ssh user@host        # SSH 连接
+ssh -p 2222 user@host  # 指定端口
+scp file user@host:/path  # 复制到远程
+scp user@host:/path/file .  # 从远程复制
+rsync -avz src/ user@host:/dest/  # 同步目录
+```
+
+---
+
+## 📦 压缩解压
+
+### tar
+
+```bash
+# 压缩
+tar -czvf archive.tar.gz dir/     # gzip
+tar -cjvf archive.tar.bz2 dir/    # bzip2
+
+# 解压
+tar -xzvf archive.tar.gz          # gzip
+tar -xjvf archive.tar.bz2         # bzip2
+tar -xzvf archive.tar.gz -C /path # 指定目录
+```
+
+### zip
+
+```bash
+zip -r archive.zip dir/           # 压缩
+unzip archive.zip                 # 解压
+unzip archive.zip -d /path        # 指定目录
+```
+
+---
+
+## 👤 用户管理
+
+```bash
+whoami               # 当前用户
+id                   # 用户信息
+sudo command         # 以 root 执行
+su - username        # 切换用户
+passwd               # 修改密码
+
+# 用户管理（需 root）
+useradd username     # 创建用户
+userdel username     # 删除用户
+usermod -aG group user  # 添加到组
+```
+
+---
+
+## 📊 系统信息
+
+```bash
+uname -a             # 系统信息
+cat /etc/os-release  # 发行版信息
+uptime               # 运行时间
+free -h              # 内存使用
+df -h                # 磁盘使用
+lscpu                # CPU 信息
+```
+
+---
+
+## 🔗 管道和重定向
+
+### 管道
+
+```bash
+command1 | command2              # 管道
+cat file | grep "pattern" | wc -l
+ps aux | grep node | awk '{print $2}'
+```
+
+### 重定向
+
+```bash
+command > file       # 输出到文件（覆盖）
+command >> file      # 输出到文件（追加）
+command 2> error.log # 错误输出
+command > out.log 2>&1  # 合并输出
+command < file       # 从文件输入
+```
+
+### 常用组合
+
+```bash
+# 查找并删除
+find . -name "*.log" -delete
+
+# 批量替换
+sed -i 's/old/new/g' file
+
+# 按列提取
+awk '{print $1, $3}' file
+
+# 去重排序
+sort file | uniq
+
+# 实时过滤日志
+tail -f app.log | grep --line-buffered "ERROR"
+```
+
+---
+
+## 💡 实用技巧
+
+### 历史命令
+
+```bash
+history              # 查看历史
+!123                 # 执行第123条
+!!                   # 执行上一条
+!grep                # 执行最近的 grep
+Ctrl+R               # 搜索历史
+```
+
+### 快捷键
+
+| 快捷键 | 功能 |
+|--------|------|
+| `Ctrl+C` | 中断命令 |
+| `Ctrl+Z` | 暂停命令 |
+| `Ctrl+D` | 退出/EOF |
+| `Ctrl+L` | 清屏 |
+| `Ctrl+A` | 行首 |
+| `Ctrl+E` | 行尾 |
+| `Ctrl+U` | 删除到行首 |
+| `Ctrl+K` | 删除到行尾 |
+| `Tab` | 自动补全 |
+
+### 别名
+
+```bash
+# 添加到 ~/.bashrc 或 ~/.zshrc
+alias ll='ls -la'
+alias gs='git status'
+alias dc='docker-compose'
+alias cls='clear'
+
+# 生效
+source ~/.bashrc
+```
+
+---
+
+## 📚 推荐资源
+
+- [Linux Command](https://www.linuxcommand.org/)
+- [TLDR Pages](https://tldr.sh/) - 简化的 man 手册
+- [Explain Shell](https://explainshell.com/) - 命令解释

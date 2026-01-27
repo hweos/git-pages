@@ -1,0 +1,380 @@
+---
+sidebar_position: 10
+slug: chrome-devtools
+title: Chrome DevTools 技巧
+description: Chrome 开发者工具调试、性能分析、网络请求技巧
+---
+
+# Chrome DevTools 技巧
+
+Chrome DevTools 是前端开发的必备工具。本文总结常用技巧和隐藏功能。
+
+## 🚀 快捷键
+
+### 打开 DevTools
+
+| 快捷键 | 功能 |
+|--------|------|
+| `F12` / `Cmd+Option+I` | 打开 DevTools |
+| `Cmd+Option+J` | 打开 Console |
+| `Cmd+Option+C` | 选择元素模式 |
+| `Cmd+Shift+P` | 命令菜单 |
+| `Cmd+P` | 打开文件 |
+
+### 面板内
+
+| 快捷键 | 功能 |
+|--------|------|
+| `Cmd+[` / `Cmd+]` | 切换面板 |
+| `Cmd+Shift+D` | 切换 Dock 位置 |
+| `Esc` | 打开/关闭 Console 抽屉 |
+| `Cmd+K` | 清空 Console |
+
+---
+
+## 🔍 Elements 面板
+
+### 选择元素
+
+```javascript
+// 在 Console 中
+$0  // 当前选中的元素
+$1  // 上一个选中的元素
+$$('selector')  // querySelectorAll 简写
+$('selector')   // querySelector 简写
+```
+
+### 编辑技巧
+
+- **双击** - 编辑文本/属性
+- **拖拽** - 移动元素位置
+- **Delete** - 删除元素
+- **Cmd+Z** - 撤销修改
+- **H** - 隐藏元素
+
+### 强制状态
+
+右键元素 → "Force state" 可强制：
+- `:hover`
+- `:active`
+- `:focus`
+- `:visited`
+- `:focus-within`
+
+### 复制功能
+
+右键元素可复制：
+- Copy element
+- Copy selector
+- Copy JS path
+- Copy XPath
+- Copy styles
+
+---
+
+## 🎨 Styles 面板
+
+### 颜色选择器
+
+- 点击颜色方块打开选择器
+- 按住 `Shift` 点击切换颜色格式 (HEX/RGB/HSL)
+- 使用吸管工具选取页面颜色
+
+### 盒模型编辑
+
+- 直接点击盒模型图编辑 margin/padding
+- 双击数值直接修改
+
+### CSS 技巧
+
+```css
+/* 在 Styles 面板中 */
+/* 点击属性名左侧可禁用/启用 */
+/* 点击 + 号添加新规则 */
+/* Cmd+Click 跳转到源文件 */
+```
+
+### Computed 面板
+
+- 查看最终计算样式
+- 点击箭头跳转到定义位置
+- 勾选 "Show all" 查看所有属性
+
+---
+
+## 💻 Console 面板
+
+### 实用方法
+
+```javascript
+// 格式化输出
+console.log('%c 样式文字', 'color: red; font-size: 20px');
+console.table([{a: 1, b: 2}, {a: 3, b: 4}]);
+console.group('分组');
+console.log('内容');
+console.groupEnd();
+
+// 计时
+console.time('timer');
+// ... 代码 ...
+console.timeEnd('timer');
+
+// 计数
+console.count('label');
+
+// 断言
+console.assert(1 === 2, '断言失败');
+
+// 堆栈跟踪
+console.trace();
+
+// 清屏
+console.clear();
+```
+
+### 特殊变量
+
+```javascript
+$_        // 上一次表达式的结果
+$0 - $4   // 最近选中的5个元素
+$('sel')  // document.querySelector
+$$('sel') // document.querySelectorAll
+$x('xpath') // XPath 查询
+```
+
+### 监控函数
+
+```javascript
+// 监控函数调用
+monitor(functionName);
+unmonitor(functionName);
+
+// 监控事件
+monitorEvents(element, 'click');
+unmonitorEvents(element);
+
+// 复制到剪贴板
+copy(object);
+
+// 查看事件监听器
+getEventListeners(element);
+```
+
+### Live Expression
+
+点击眼睛图标添加实时表达式：
+- `document.activeElement` - 当前焦点元素
+- `window.scrollY` - 滚动位置
+- `performance.memory` - 内存使用
+
+---
+
+## 🌐 Network 面板
+
+### 过滤请求
+
+```
+// 类型过滤
+XHR  Fetch  JS  CSS  Img  Media  Font  Doc  WS
+
+// 文本过滤
+domain:example.com
+has-response-header:Content-Type
+method:POST
+status-code:404
+larger-than:1M
+-status-code:200  // 排除
+```
+
+### 常用功能
+
+- **Preserve log** - 页面跳转时保留日志
+- **Disable cache** - 禁用缓存
+- **Throttling** - 网络节流（模拟慢网络）
+- **Block request** - 右键阻止特定请求
+
+### 请求详情
+
+| 标签 | 内容 |
+|------|------|
+| Headers | 请求/响应头 |
+| Preview | 响应预览 |
+| Response | 原始响应 |
+| Initiator | 调用栈 |
+| Timing | 时间详情 |
+| Cookies | Cookie 信息 |
+
+### 复制请求
+
+右键请求可复制为：
+- Copy as cURL
+- Copy as fetch
+- Copy as Node.js fetch
+- Copy all as HAR
+
+---
+
+## 🐛 Sources 面板
+
+### 断点类型
+
+| 类型 | 用途 |
+|------|------|
+| 行断点 | 点击行号 |
+| 条件断点 | 右键行号 → Add conditional |
+| 日志断点 | 右键行号 → Add logpoint |
+| DOM 断点 | Elements 右键 → Break on |
+| XHR 断点 | XHR/fetch Breakpoints |
+| 事件断点 | Event Listener Breakpoints |
+
+### 调试控制
+
+| 快捷键 | 功能 |
+|--------|------|
+| `F8` / `Cmd+\` | 继续/暂停 |
+| `F10` / `Cmd+'` | 单步跳过 |
+| `F11` / `Cmd+;` | 单步进入 |
+| `Shift+F11` | 单步跳出 |
+| `Cmd+F8` | 禁用所有断点 |
+
+### Snippets
+
+- 保存常用代码片段
+- 可随时执行
+- 跨页面保存
+
+```javascript
+// 示例：清除所有 localStorage
+localStorage.clear();
+sessionStorage.clear();
+console.log('Storage cleared!');
+```
+
+### Overrides
+
+本地覆盖文件，用于：
+- 测试修改而不改源码
+- 调试生产环境问题
+
+---
+
+## 📊 Performance 面板
+
+### 录制性能
+
+1. 点击录制按钮
+2. 进行页面操作
+3. 停止录制
+4. 分析结果
+
+### 关键指标
+
+| 指标 | 说明 |
+|------|------|
+| FCP | 首次内容绘制 |
+| LCP | 最大内容绘制 |
+| CLS | 累积布局偏移 |
+| TBT | 总阻塞时间 |
+
+### 火焰图分析
+
+- **黄色** - JavaScript 执行
+- **紫色** - 渲染/布局
+- **绿色** - 绘制
+- **灰色** - 系统/空闲
+
+### 常见问题
+
+- 长任务（>50ms）
+- 强制同步布局
+- 过多重绘/重排
+
+---
+
+## 💾 Application 面板
+
+### 存储查看
+
+- **Local Storage** - 本地存储
+- **Session Storage** - 会话存储
+- **IndexedDB** - 数据库
+- **Cookies** - Cookie
+- **Cache Storage** - 缓存
+
+### 常用操作
+
+```javascript
+// Console 中操作存储
+localStorage.setItem('key', 'value');
+localStorage.getItem('key');
+localStorage.removeItem('key');
+localStorage.clear();
+
+// 查看所有 Cookie
+document.cookie;
+```
+
+### Service Workers
+
+- 查看注册的 Service Worker
+- 测试离线模式
+- 手动更新
+
+---
+
+## 🎯 实用技巧
+
+### 截图
+
+- `Cmd+Shift+P` → "Capture"
+  - Capture screenshot（当前视口）
+  - Capture full size screenshot（整页）
+  - Capture node screenshot（选中元素）
+
+### 模拟设备
+
+- 点击设备图标切换移动视图
+- 可自定义设备尺寸
+- 模拟触摸事件
+- 模拟地理位置
+
+### 黑盒脚本
+
+- 右键脚本 → "Blackbox script"
+- 调试时跳过第三方库
+
+### 覆盖 User Agent
+
+`Cmd+Shift+P` → "Network conditions"
+
+### 禁用 JavaScript
+
+`Cmd+Shift+P` → "Disable JavaScript"
+
+### 打印模式
+
+`Cmd+Shift+P` → "Emulate CSS print media"
+
+---
+
+## 🔧 命令菜单精选
+
+`Cmd+Shift+P` 打开命令菜单：
+
+```
+Show Rendering        # 渲染面板（FPS、布局边界等）
+Show Coverage         # 代码覆盖率
+Show Animations       # 动画检查
+Capture screenshot    # 截图
+Disable JavaScript    # 禁用 JS
+Show paint flashing   # 显示重绘区域
+Show layout shift regions  # 布局偏移区域
+```
+
+---
+
+## 📚 推荐资源
+
+- [Chrome DevTools 官方文档](https://developer.chrome.com/docs/devtools/)
+- [DevTools Tips](https://devtoolstips.org/)
+- [What's New in DevTools](https://developer.chrome.com/tags/new-in-devtools/)

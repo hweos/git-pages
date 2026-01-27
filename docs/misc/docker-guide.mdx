@@ -1,0 +1,346 @@
+---
+sidebar_position: 7
+slug: docker-guide
+title: Docker 入门指南
+description: Docker 容器基础、常用命令与 Dockerfile 编写
+---
+
+# Docker 入门指南
+
+Docker 是现代开发和部署的标配工具。本文总结 Docker 的核心概念和常用操作。
+
+## 🐳 核心概念
+
+| 概念 | 说明 |
+|------|------|
+| **镜像 (Image)** | 只读模板，包含运行应用所需的一切 |
+| **容器 (Container)** | 镜像的运行实例，可读写 |
+| **仓库 (Registry)** | 存储镜像的地方，如 Docker Hub |
+| **Dockerfile** | 构建镜像的脚本文件 |
+
+```
+Dockerfile → Image → Container
+   构建        运行
+```
+
+---
+
+## 📦 镜像操作
+
+### 拉取镜像
+
+```bash
+# 从 Docker Hub 拉取
+docker pull nginx
+docker pull node:18-alpine
+docker pull mysql:8.0
+
+# 查看本地镜像
+docker images
+docker image ls
+```
+
+### 删除镜像
+
+```bash
+# 删除指定镜像
+docker rmi nginx
+
+# 删除所有未使用的镜像
+docker image prune -a
+```
+
+### 构建镜像
+
+```bash
+# 在当前目录构建
+docker build -t myapp:1.0 .
+
+# 指定 Dockerfile
+docker build -f Dockerfile.prod -t myapp:prod .
+```
+
+---
+
+## 🚀 容器操作
+
+### 运行容器
+
+```bash
+# 基础运行
+docker run nginx
+
+# 后台运行 + 端口映射
+docker run -d -p 8080:80 nginx
+
+# 命名容器
+docker run -d --name my-nginx -p 8080:80 nginx
+
+# 交互式运行
+docker run -it ubuntu bash
+
+# 挂载目录
+docker run -d -v /host/path:/container/path nginx
+
+# 环境变量
+docker run -d -e MYSQL_ROOT_PASSWORD=123456 mysql
+```
+
+### 常用参数
+
+| 参数 | 说明 |
+|------|------|
+| `-d` | 后台运行 (detached) |
+| `-p 8080:80` | 端口映射 (主机:容器) |
+| `-v /a:/b` | 目录挂载 (主机:容器) |
+| `-e KEY=VAL` | 环境变量 |
+| `--name xxx` | 容器命名 |
+| `--rm` | 退出后自动删除 |
+| `-it` | 交互式终端 |
+
+### 管理容器
+
+```bash
+# 查看运行中的容器
+docker ps
+
+# 查看所有容器
+docker ps -a
+
+# 停止/启动/重启
+docker stop my-nginx
+docker start my-nginx
+docker restart my-nginx
+
+# 删除容器
+docker rm my-nginx
+
+# 强制删除运行中的容器
+docker rm -f my-nginx
+
+# 删除所有停止的容器
+docker container prune
+```
+
+### 进入容器
+
+```bash
+# 进入运行中的容器
+docker exec -it my-nginx bash
+
+# 执行单个命令
+docker exec my-nginx cat /etc/nginx/nginx.conf
+```
+
+### 查看日志
+
+```bash
+# 查看日志
+docker logs my-nginx
+
+# 实时跟踪
+docker logs -f my-nginx
+
+# 最后 100 行
+docker logs --tail 100 my-nginx
+```
+
+---
+
+## 📝 Dockerfile 编写
+
+### 基础模板
+
+```dockerfile
+# 基础镜像
+FROM node:18-alpine
+
+# 工作目录
+WORKDIR /app
+
+# 复制依赖文件
+COPY package*.json ./
+
+# 安装依赖
+RUN npm ci --only=production
+
+# 复制源代码
+COPY . .
+
+# 暴露端口
+EXPOSE 3000
+
+# 启动命令
+CMD ["node", "server.js"]
+```
+
+### 常用指令
+
+| 指令 | 说明 |
+|------|------|
+| `FROM` | 基础镜像 |
+| `WORKDIR` | 工作目录 |
+| `COPY` | 复制文件 |
+| `ADD` | 复制文件（支持 URL 和解压） |
+| `RUN` | 执行命令（构建时） |
+| `CMD` | 启动命令（运行时） |
+| `ENTRYPOINT` | 入口点 |
+| `ENV` | 环境变量 |
+| `EXPOSE` | 暴露端口 |
+| `VOLUME` | 挂载点 |
+| `ARG` | 构建参数 |
+
+### 多阶段构建
+
+```dockerfile
+# 构建阶段
+FROM node:18 AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# 生产阶段
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+### .dockerignore
+
+```
+node_modules
+npm-debug.log
+.git
+.gitignore
+*.md
+.env
+.env.*
+dist
+coverage
+```
+
+---
+
+## 🔗 Docker Compose
+
+### docker-compose.yml 示例
+
+```yaml
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgres://db:5432/myapp
+    depends_on:
+      - db
+    volumes:
+      - ./logs:/app/logs
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=myapp
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+```
+
+### Compose 常用命令
+
+```bash
+# 启动服务
+docker-compose up -d
+
+# 停止服务
+docker-compose down
+
+# 查看日志
+docker-compose logs -f
+
+# 重建并启动
+docker-compose up -d --build
+
+# 查看服务状态
+docker-compose ps
+```
+
+---
+
+## 💡 最佳实践
+
+### 1. 使用 Alpine 镜像
+
+```dockerfile
+# ✅ 更小的镜像
+FROM node:18-alpine
+
+# ❌ 完整镜像较大
+FROM node:18
+```
+
+### 2. 合理利用缓存
+
+```dockerfile
+# ✅ 先复制依赖文件，再复制源码
+COPY package*.json ./
+RUN npm ci
+COPY . .
+
+# ❌ 每次都重新安装依赖
+COPY . .
+RUN npm ci
+```
+
+### 3. 减少层数
+
+```dockerfile
+# ✅ 合并 RUN 命令
+RUN apt-get update && \
+    apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# ❌ 多个 RUN 增加层数
+RUN apt-get update
+RUN apt-get install -y curl
+```
+
+### 4. 非 root 用户运行
+
+```dockerfile
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+```
+
+---
+
+## 📚 常用镜像
+
+| 镜像 | 用途 |
+|------|------|
+| `nginx:alpine` | Web 服务器 |
+| `node:18-alpine` | Node.js 运行环境 |
+| `python:3.11-slim` | Python 运行环境 |
+| `postgres:15-alpine` | PostgreSQL 数据库 |
+| `redis:alpine` | Redis 缓存 |
+| `mysql:8` | MySQL 数据库 |
+| `mongo:6` | MongoDB 数据库 |
+
+---
+
+## 🔗 推荐资源
+
+- [Docker 官方文档](https://docs.docker.com/)
+- [Docker Hub](https://hub.docker.com/)
+- [Play with Docker](https://labs.play-with-docker.com/) - 在线练习
