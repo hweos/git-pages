@@ -73,8 +73,9 @@ public class IndexMinPQ<Item extends Comparable<Item>> {
           pq 数组中的元素，所以需要使用 qp 数组来获取对应 pq
           数组的位置，然后再跟最后一个元素交换
          */
+        int i = qp[k];
         items[k] = null;
-        swapPQ(qp[k], n);
+        swapPQ(i, n);
         // 维护为"空"
         qp[pq[n]] = -1;
         pq[n] = 0;
@@ -85,7 +86,10 @@ public class IndexMinPQ<Item extends Comparable<Item>> {
          delMin 中是特殊的 delete 操作，相当于调用了
          delete(pq[1]) 。
          */
-        sink(pq[k]);
+        if (i <= n) {
+            swim(i);
+            sink(i);
+        }
     }
     Item min() {
         if (n == 0) throw new NoSuchElementException("Priority queue underflow");
@@ -143,7 +147,7 @@ public class IndexMinPQ<Item extends Comparable<Item>> {
             if (2 * k <= n && less(k * 2, min)) {
                 min = 2 * k;
             }
-            if (2 * k + 1 < n && less(k * 2 + 1, min)) {
+            if (2 * k + 1 <= n && less(k * 2 + 1, min)) {
                 min = 2 * k + 1;
             }
             // 如果最小的就交换
