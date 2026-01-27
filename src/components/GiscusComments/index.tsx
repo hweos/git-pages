@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect, type ReactNode} from 'react';
 
-export default function GiscusComments(): JSX.Element {
+export default function GiscusComments(): ReactNode {
   const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState('light');
 

@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect, type ReactNode} from 'react';
 import styles from './styles.module.css';
 
-export default function ReadingProgress(): JSX.Element {
+export default function ReadingProgress(): ReactNode {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {

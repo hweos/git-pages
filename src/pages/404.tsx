@@ -1,10 +1,10 @@
-import React from 'react';
+import type {ReactNode} from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 
 import styles from './404.module.css';
 
-export default function NotFound(): JSX.Element {
+export default function NotFound(): ReactNode {
   return (
     <Layout title="页面未找到">
       <main className={styles.container}>

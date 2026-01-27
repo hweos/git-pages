@@ -1,4 +1,4 @@
-import React from 'react';
+import type {ReactNode} from 'react';
 import BlogPostPage from '@theme-original/BlogPostPage';
 import type BlogPostPageType from '@theme/BlogPostPage';
 import type {WrapperProps} from '@docusaurus/types';
@@ -6,7 +6,7 @@ import GiscusComments from '@site/src/components/GiscusComments';
 
 type Props = WrapperProps<typeof BlogPostPageType>;
 
-export default function BlogPostPageWrapper(props: Props): JSX.Element {
+export default function BlogPostPageWrapper(props: Props): ReactNode {
   return (
     <>
       <BlogPostPage {...props} />

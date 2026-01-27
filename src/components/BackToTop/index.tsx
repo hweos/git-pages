@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect, type ReactNode} from 'react';
 import styles from './styles.module.css';
 
-export default function BackToTop(): JSX.Element {
+export default function BackToTop(): ReactNode {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
