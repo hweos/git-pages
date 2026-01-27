@@ -673,64 +673,153 @@
 @media screen and (max-width: 576px) {
   .hero {
     padding: 1rem;
+    min-height: calc(100vh - 60px);
+  }
+
+  .greeting {
+    font-size: 1rem;
   }
 
   .heroTitle {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .typewriter {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
+    min-height: 2rem;
   }
 
   .heroDescription {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
   }
 
   .heroButtons {
     flex-direction: column;
     width: 100%;
     padding: 0 1rem;
+    gap: 0.75rem;
   }
 
   .primaryBtn,
   .secondaryBtn {
     width: 100%;
     justify-content: center;
+    padding: 0.875rem 1.5rem;
   }
 
   .iconBtn {
     display: none;
   }
 
+  .scrollIndicator {
+    display: none;
+  }
+
+  /* Skills Section Mobile */
+  .skillsSection {
+    padding: 4rem 0;
+  }
+
+  .sectionTitle {
+    font-size: 1.75rem;
+  }
+
+  .sectionSubtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Content Grid Mobile - 单列 */
+  .contentSection {
+    padding: 4rem 0;
+  }
+
   .contentGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.75rem;
+    padding: 0 1rem;
   }
 
   .contentCard {
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 0.75rem;
   }
 
   .cardIcon {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
   }
 
   .cardCount {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .cardTitle {
+    font-size: 0.95rem;
+  }
+
+  .cardDesc {
+    font-size: 0.75rem;
+  }
+
+  /* Posts Section Mobile */
+  .postsSection {
+    padding: 4rem 0;
+  }
+
+  .postsList {
+    padding: 0 1rem;
   }
 
   .postItem {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.25rem;
+    padding: 1rem;
+  }
+
+  .postDate {
+    font-size: 0.75rem;
+  }
+
+  .postTitle {
+    font-size: 0.95rem;
   }
 
   .postArrow {
     display: none;
   }
 
+  /* CTA Section Mobile */
+  .ctaSection {
+    padding: 4rem 0;
+  }
+
   .ctaTitle {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .ctaDescription {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    padding: 0 2rem;
+  }
+
+  .ctaButton,
+  .ctaButtonOutline {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* 减少动画复杂度 */
+  .gradientOrb1,
+  .gradientOrb2,
+  .gradientOrb3 {
+    animation: none;
+    opacity: 0.3;
   }
 }

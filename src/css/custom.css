@@ -135,6 +135,96 @@ body {
   font-weight: 600;
 }
 
+/* 移动端侧边导航 */
+.navbar-sidebar {
+  z-index: 10000 !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  max-height: none !important;
+  background: #ffffff;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] .navbar-sidebar {
+  background: #0f172a;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-sidebar__backdrop {
+  z-index: 9999 !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* 侧边栏品牌区域 */
+.navbar-sidebar__brand {
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+[data-theme='dark'] .navbar-sidebar__brand {
+  border-bottom-color: #334155;
+  background: #1e293b;
+}
+
+/* 侧边栏关闭按钮 */
+.navbar-sidebar__close {
+  color: var(--ifm-color-primary);
+}
+
+/* 侧边栏导航项 */
+.navbar-sidebar .menu__link {
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 0;
+  margin: 0;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  color: #334155;
+}
+
+[data-theme='dark'] .navbar-sidebar .menu__link {
+  color: #e2e8f0;
+}
+
+.navbar-sidebar .menu__link:hover {
+  background: #f1f5f9;
+  border-left-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+[data-theme='dark'] .navbar-sidebar .menu__link:hover {
+  background: #1e293b;
+}
+
+.navbar-sidebar .menu__link--active {
+  background: #e0f2fe;
+  border-left-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+}
+
+[data-theme='dark'] .navbar-sidebar .menu__link--active {
+  background: rgba(8, 145, 178, 0.15);
+}
+
+/* 侧边栏分隔线 */
+.navbar-sidebar__items {
+  padding: 0.5rem 0;
+}
+
+.navbar-sidebar__item {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+[data-theme='dark'] .navbar-sidebar__item {
+  border-bottom-color: #1e293b;
+}
+
 /* ============================================
    Sidebar Styles
    ============================================ */
