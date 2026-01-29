@@ -252,10 +252,10 @@ function LatestPostsSection() {
   const { ref, isVisible } = useScrollAnimation();
   
   const posts = [
-    { title: 'VSCode 高效开发配置指南', date: '2024-03-15', slug: '/blog/vscode-setup' },
-    { title: '从 0 到 1 搭建 Docusaurus 博客', date: '2024-03-01', slug: '/blog/build-docusaurus-blog' },
-    { title: 'JavaScript 异步编程进阶', date: '2024-02-20', slug: '/blog/async-javascript' },
-    { title: 'Git 工作流最佳实践', date: '2024-02-01', slug: '/blog/git-workflow' },
+    { title: '技术写作指南', date: '2024-10-10', slug: '/blog/tech-writing' },
+    { title: 'Node.js CLI 工具开发', date: '2024-10-01', slug: '/blog/nodejs-cli' },
+    { title: '前端监控与埋点实践', date: '2024-09-20', slug: '/blog/frontend-monitoring' },
+    { title: 'WebSocket 实时通信指南', date: '2024-09-10', slug: '/blog/websocket-guide' },
   ];
 
   return (
