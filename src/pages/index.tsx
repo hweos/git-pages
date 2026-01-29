@@ -252,10 +252,10 @@ function LatestPostsSection() {
   const { ref, isVisible } = useScrollAnimation();
   
   const posts = [
-    { title: '技术写作指南', date: '2024-10-10', slug: '/blog/tech-writing' },
-    { title: 'Node.js CLI 工具开发', date: '2024-10-01', slug: '/blog/nodejs-cli' },
-    { title: '前端监控与埋点实践', date: '2024-09-20', slug: '/blog/frontend-monitoring' },
-    { title: 'WebSocket 实时通信指南', date: '2024-09-10', slug: '/blog/websocket-guide' },
+    { title: '2025 前端技术趋势回顾', date: '2025-11-01', slug: '/blog/frontend-trends-2025' },
+    { title: 'Web Components 实践指南', date: '2025-10-01', slug: '/blog/web-components' },
+    { title: '消息队列入门指南', date: '2025-09-01', slug: '/blog/message-queue-intro' },
+    { title: '移动端 H5 开发技巧', date: '2025-08-01', slug: '/blog/h5-mobile-development' },
   ];
 
   return (
