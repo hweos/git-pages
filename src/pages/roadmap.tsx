@@ -47,6 +47,7 @@ const roadmaps: Roadmap[] = [
         difficulty: 'beginner',
         skills: ['HTML5 语义化标签', 'CSS3 选择器与盒模型', 'Flexbox 与 Grid 布局', 'CSS 动画与过渡', 'JavaScript ES6+ 语法', 'DOM 操作与事件', 'Git 版本控制', '浏览器开发者工具'],
         resources: [
+          { label: 'JavaScript 核心概念', link: '/docs/frontend/javascript-core' },
           { label: 'CSS 布局技巧', link: '/docs/frontend/css-layout' },
           { label: 'CSS 动画与过渡', link: '/blog/css-animation' },
           { label: 'Git 工作流', link: '/blog/git-workflow' },
@@ -67,6 +68,8 @@ const roadmaps: Roadmap[] = [
         difficulty: 'intermediate',
         skills: ['React 核心概念', 'Hooks 深入理解', '组件设计模式', '状态管理方案', 'React Router', 'TypeScript 类型系统', 'Next.js / Vite', 'CSS Modules / Tailwind'],
         resources: [
+          { label: 'React Hooks 详解', link: '/docs/frontend/react-hooks' },
+          { label: 'React 组件设计模式', link: '/docs/frontend/react-patterns' },
           { label: 'TypeScript 技巧', link: '/docs/frontend/typescript-tips' },
           { label: '状态管理对比', link: '/blog/state-management' },
           { label: 'React 性能优化', link: '/blog/react-performance' },
@@ -88,6 +91,7 @@ const roadmaps: Roadmap[] = [
         difficulty: 'intermediate',
         skills: ['Vite / Webpack 配置', 'ESLint + Prettier', 'Husky + lint-staged', 'Jest / Vitest 测试', 'E2E 测试 (Playwright)', 'CI/CD 流水线', 'Monorepo 管理', 'npm/pnpm 包管理'],
         resources: [
+          { label: 'Vite 配置指南', link: '/docs/frontend/vite-guide' },
           { label: '前端工程化配置', link: '/docs/frontend/engineering' },
           { label: 'CI/CD 流水线', link: '/blog/cicd-pipeline' },
           { label: 'Monorepo 实践', link: '/blog/monorepo-guide' },
@@ -160,6 +164,7 @@ const roadmaps: Roadmap[] = [
         difficulty: 'beginner',
         skills: ['Node.js 运行时', 'JavaScript/TypeScript', 'Go / Java / Python', '异步编程模型', '错误处理', '包管理工具', '调试技巧', '代码规范'],
         resources: [
+          { label: 'Node.js 入门指南', link: '/docs/backend/nodejs-intro' },
           { label: 'JavaScript 异步编程', link: '/blog/async-javascript' },
           { label: 'npm/pnpm 实践', link: '/blog/npm-pnpm-guide' },
           { label: 'Node.js CLI 开发', link: '/blog/nodejs-cli' },
@@ -179,6 +184,7 @@ const roadmaps: Roadmap[] = [
         difficulty: 'intermediate',
         skills: ['SQL 基础语法', 'MySQL / PostgreSQL', '索引原理与优化', 'Redis 缓存', 'MongoDB 文档数据库', '数据库设计范式', 'ORM 框架', '事务与锁'],
         resources: [
+          { label: '数据库设计基础', link: '/docs/backend/database-design' },
           { label: '数据库索引优化', link: '/blog/database-index' },
         ],
         tips: [
@@ -195,7 +201,8 @@ const roadmaps: Roadmap[] = [
         difficulty: 'intermediate',
         skills: ['RESTful API 设计', 'GraphQL', 'JWT 认证', 'OAuth 2.0', 'API 文档 (OpenAPI)', '输入验证', '错误处理规范', '限流与防刷'],
         resources: [
-          { label: 'RESTful API 设计', link: '/blog/restful-api-design' },
+          { label: 'RESTful API 设计规范', link: '/docs/backend/restful-api' },
+          { label: 'RESTful API 实践', link: '/blog/restful-api-design' },
           { label: 'GraphQL 入门', link: '/blog/graphql-intro' },
           { label: '前端安全实践', link: '/blog/frontend-security' },
         ],
@@ -213,11 +220,12 @@ const roadmaps: Roadmap[] = [
         difficulty: 'intermediate',
         skills: ['Linux 基础命令', 'Docker 容器化', 'Docker Compose', 'Nginx 配置', 'CI/CD 流水线', '日志管理', '监控告警', 'PM2 进程管理'],
         resources: [
+          { label: 'Docker Compose 实践', link: '/docs/devops/docker-compose' },
+          { label: 'GitHub Actions 入门', link: '/docs/devops/github-actions' },
           { label: 'Docker 指南', link: '/docs/misc/docker-guide' },
           { label: 'Nginx 配置', link: '/docs/misc/nginx-guide' },
           { label: 'Linux 常用命令', link: '/docs/misc/linux-commands' },
           { label: 'PM2 进程管理', link: '/docs/misc/pm2-guide' },
-          { label: 'CI/CD 流水线', link: '/blog/cicd-pipeline' },
         ],
         tips: [
           'Docker 是现代部署的基础技能',
@@ -313,9 +321,10 @@ const roadmaps: Roadmap[] = [
         difficulty: 'intermediate',
         skills: ['Docker 容器化', 'CI/CD 自动化', '域名与 HTTPS', '云服务基础', '监控与日志', '性能优化'],
         resources: [
+          { label: 'Docker Compose 实践', link: '/docs/devops/docker-compose' },
+          { label: 'GitHub Actions 入门', link: '/docs/devops/github-actions' },
           { label: 'Docker 指南', link: '/docs/misc/docker-guide' },
           { label: 'Nginx 配置', link: '/docs/misc/nginx-guide' },
-          { label: 'CI/CD 流水线', link: '/blog/cicd-pipeline' },
           { label: '前端监控', link: '/blog/frontend-monitoring' },
         ],
         tips: [
@@ -379,6 +388,9 @@ const roadmaps: Roadmap[] = [
         resources: [
           { label: '排序算法总结', link: '/docs/data-structures-algorithms/sorting-algorithms' },
           { label: '二分查找变体', link: '/docs/data-structures-algorithms/binary-search' },
+          { label: '回溯算法详解', link: '/docs/data-structures-algorithms/backtracking' },
+          { label: 'BFS/DFS 遍历', link: '/docs/data-structures-algorithms/bfs-dfs' },
+          { label: '贪心算法入门', link: '/docs/data-structures-algorithms/greedy' },
         ],
         tips: [
           '每种算法都要手写多遍',
@@ -396,6 +408,7 @@ const roadmaps: Roadmap[] = [
         resources: [
           { label: '双指针技巧', link: '/docs/data-structures-algorithms/two-pointers' },
           { label: '动态规划详解', link: '/docs/data-structures-algorithms/dynamic-programming' },
+          { label: '回溯算法详解', link: '/docs/data-structures-algorithms/backtracking' },
         ],
         tips: [
           '动态规划是重中之重',
