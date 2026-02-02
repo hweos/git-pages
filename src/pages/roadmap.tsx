@@ -48,6 +48,8 @@ const roadmaps: Roadmap[] = [
         skills: ['HTML5 语义化标签', 'CSS3 选择器与盒模型', 'Flexbox 与 Grid 布局', 'CSS 动画与过渡', 'JavaScript ES6+ 语法', 'DOM 操作与事件', 'Git 版本控制', '浏览器开发者工具'],
         resources: [
           { label: 'JavaScript 核心概念', link: '/docs/frontend/javascript-core' },
+          { label: 'HTML5 语义化与 SEO', link: '/docs/frontend/html5-seo' },
+          { label: 'DOM 操作与事件', link: '/docs/frontend/dom-events' },
           { label: 'CSS 布局技巧', link: '/docs/frontend/css-layout' },
           { label: 'CSS 动画与过渡', link: '/blog/css-animation' },
           { label: 'Git 工作流', link: '/blog/git-workflow' },
@@ -92,10 +94,11 @@ const roadmaps: Roadmap[] = [
         skills: ['Vite / Webpack 配置', 'ESLint + Prettier', 'Husky + lint-staged', 'Jest / Vitest 测试', 'E2E 测试 (Playwright)', 'CI/CD 流水线', 'Monorepo 管理', 'npm/pnpm 包管理'],
         resources: [
           { label: 'Vite 配置指南', link: '/docs/frontend/vite-guide' },
+          { label: 'Webpack 配置详解', link: '/docs/frontend/webpack-guide' },
+          { label: '前端测试入门', link: '/docs/frontend/testing-guide' },
           { label: '前端工程化配置', link: '/docs/frontend/engineering' },
           { label: 'CI/CD 流水线', link: '/blog/cicd-pipeline' },
           { label: 'Monorepo 实践', link: '/blog/monorepo-guide' },
-          { label: '单元测试入门', link: '/blog/unit-testing-guide' },
           { label: 'npm/pnpm 实践', link: '/blog/npm-pnpm-guide' },
         ],
         tips: [
@@ -112,6 +115,7 @@ const roadmaps: Roadmap[] = [
         difficulty: 'advanced',
         skills: ['Core Web Vitals', '加载性能优化', '运行时性能优化', '图片/字体优化', '代码分割与懒加载', '无障碍 (a11y)', '国际化 (i18n)', '前端监控'],
         resources: [
+          { label: '浏览器工作原理', link: '/docs/frontend/browser-internals' },
           { label: 'Web 性能指标', link: '/blog/web-vitals' },
           { label: '浏览器渲染原理', link: '/blog/browser-rendering' },
           { label: '无障碍开发', link: '/blog/accessibility-guide' },
@@ -185,6 +189,8 @@ const roadmaps: Roadmap[] = [
         skills: ['SQL 基础语法', 'MySQL / PostgreSQL', '索引原理与优化', 'Redis 缓存', 'MongoDB 文档数据库', '数据库设计范式', 'ORM 框架', '事务与锁'],
         resources: [
           { label: '数据库设计基础', link: '/docs/backend/database-design' },
+          { label: 'MongoDB 入门指南', link: '/docs/backend/mongodb-guide' },
+          { label: 'Redis 缓存实践', link: '/docs/backend/redis-guide' },
           { label: '数据库索引优化', link: '/blog/database-index' },
         ],
         tips: [
@@ -201,7 +207,9 @@ const roadmaps: Roadmap[] = [
         difficulty: 'intermediate',
         skills: ['RESTful API 设计', 'GraphQL', 'JWT 认证', 'OAuth 2.0', 'API 文档 (OpenAPI)', '输入验证', '错误处理规范', '限流与防刷'],
         resources: [
+          { label: 'Express 框架详解', link: '/docs/backend/express-guide' },
           { label: 'RESTful API 设计规范', link: '/docs/backend/restful-api' },
+          { label: 'JWT 认证实现', link: '/docs/backend/jwt-auth' },
           { label: 'RESTful API 实践', link: '/blog/restful-api-design' },
           { label: 'GraphQL 入门', link: '/blog/graphql-intro' },
           { label: '前端安全实践', link: '/blog/frontend-security' },
@@ -241,9 +249,10 @@ const roadmaps: Roadmap[] = [
         difficulty: 'advanced',
         skills: ['微服务架构', '消息队列', '分布式事务', '服务注册发现', '负载均衡', '高可用设计', '性能调优', 'Serverless'],
         resources: [
+          { label: '微服务架构入门', link: '/docs/devops/microservices-intro' },
+          { label: 'WebSocket 实战', link: '/docs/backend/websocket-guide' },
           { label: '消息队列入门', link: '/blog/message-queue-intro' },
           { label: 'Serverless 开发', link: '/blog/serverless-guide' },
-          { label: 'WebSocket 实时通信', link: '/blog/websocket-guide' },
         ],
         tips: [
           '不要为了微服务而微服务',
@@ -468,9 +477,11 @@ const roadmaps: Roadmap[] = [
         difficulty: 'intermediate',
         skills: ['算法手写', '八股文复习', '项目深挖', '系统设计基础', '代码规范', '沟通表达'],
         resources: [
+          { label: '前端面试八股文', link: '/docs/interview/frontend-interview' },
+          { label: '系统设计入门', link: '/docs/interview/system-design' },
+          { label: '浏览器工作原理', link: '/docs/frontend/browser-internals' },
           { label: '浏览器渲染原理', link: '/blog/browser-rendering' },
           { label: '前端安全实践', link: '/blog/frontend-security' },
-          { label: 'CSS 动画技巧', link: '/blog/css-animation' },
           { label: 'JavaScript 异步', link: '/blog/async-javascript' },
           { label: 'React 性能优化', link: '/blog/react-performance' },
         ],
@@ -553,6 +564,7 @@ const roadmaps: Roadmap[] = [
         skills: ['Docker 基础', 'Dockerfile 编写', 'Docker Compose', '镜像优化', '容器网络', '数据卷', '私有仓库'],
         resources: [
           { label: 'Docker 完整指南', link: '/docs/misc/docker-guide' },
+          { label: 'Docker Compose 实践', link: '/docs/devops/docker-compose' },
         ],
         tips: [
           'Docker 是容器化的入门必备',
@@ -568,6 +580,7 @@ const roadmaps: Roadmap[] = [
         difficulty: 'intermediate',
         skills: ['GitHub Actions', 'GitLab CI', 'Jenkins', '自动化测试', '自动化部署', '环境管理', 'Secrets 管理'],
         resources: [
+          { label: 'GitHub Actions 入门', link: '/docs/devops/github-actions' },
           { label: 'CI/CD 流水线搭建', link: '/blog/cicd-pipeline' },
           { label: 'Git 工作流', link: '/blog/git-workflow' },
         ],
@@ -585,6 +598,8 @@ const roadmaps: Roadmap[] = [
         difficulty: 'advanced',
         skills: ['K8s 核心概念', 'Pod/Deployment/Service', 'ConfigMap/Secret', 'Ingress', 'Helm', '监控告警', '日志收集'],
         resources: [
+          { label: 'Kubernetes 入门', link: '/docs/devops/kubernetes-intro' },
+          { label: '日志与监控体系', link: '/docs/devops/logging-monitoring' },
           { label: 'Kubernetes 官方文档', link: 'https://kubernetes.io/zh-cn/docs/', type: 'external' },
         ],
         tips: [
